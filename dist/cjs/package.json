@@ -1,0 +1,41 @@
+{
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "google-closure-compiler": "^20160208.5.0",
+    "npm-run-all": "^1.7.0",
+    "rimraf": "^2.5.2",
+    "systemjs-builder": "^0.10.6",
+    "tslint": "^3.7.1",
+    "typescript": "^1.8.9"
+  },
+  "description": "Implementation of astrometry types and routines highly influenced by 'Astronomical Algorithms' by Jean Meeus",
+  "version": "1.0.0",
+  "keywords": [
+    "fits",
+    "loading",
+    "data"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sybilla/meeus.git"
+  },
+  "name": "meeus",
+  "homepage": "https://github.com/sybilla/meeus#readme",
+  "contributors": [
+    {
+      "name": "Michał Drzał",
+      "email": "michal.drzal@sybillatechnologies.com"
+    },
+    {
+      "name": "Rafał Pawłaszek",
+      "email": "pawlaszek@sybillatechnologies.com"
+    }
+  ],
+  "main": "meeus.js",
+  "author": "Sybilla Technologies",
+  "bugs": {
+    "url": "https://github.com/sybilla/meeus/issues"
+  },
+  "typings": "meeus.d.ts"
+}
