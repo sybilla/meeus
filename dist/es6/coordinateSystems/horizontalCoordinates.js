@@ -41,6 +41,6 @@ export class HorizontalCoordinates {
 }
 HorizontalCoordinates.RegexPatternStyleMap = {
     7: AngleStyle.Degree,
-    10: AngleStyle.Degree
+    11: AngleStyle.Degree
 };
 //# sourceMappingURL=horizontalCoordinates.js.map

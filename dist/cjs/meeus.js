@@ -11,7 +11,7 @@ __export(require('./datetime/siderealtimes'));
 __export(require('./datetime/taidate'));
 __export(require('./datetime/ttdate'));
 __export(require('./datetime/utcdate'));
-__export(require('./coordinateSystems/eclipticalCoordinates'));
+__export(require('./coordinateSystems/eclipticCoordinates'));
 __export(require('./coordinateSystems/equatorialCoordinates'));
 __export(require('./coordinateSystems/geographicCoordinates'));
 __export(require('./coordinateSystems/horizontalCoordinates'));

@@ -50,11 +50,11 @@ define(["require", "exports", '../angle', '../core/meeusEngine'], function (requ
             1: angle_1.AngleStyle.Hour,
             3: angle_1.AngleStyle.Hour,
             8: angle_1.AngleStyle.Hour,
-            10: angle_1.AngleStyle.Hour
+            11: angle_1.AngleStyle.Hour
         };
         EquatorialCoordinates.DecPatternStyleMap = {
             7: angle_1.AngleStyle.Degree,
-            10: angle_1.AngleStyle.Degree
+            11: angle_1.AngleStyle.Degree
         };
         return EquatorialCoordinates;
     }());

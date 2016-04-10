@@ -49,7 +49,7 @@ var HorizontalCoordinates = (function () {
     };
     HorizontalCoordinates.RegexPatternStyleMap = {
         7: angle_1.AngleStyle.Degree,
-        10: angle_1.AngleStyle.Degree
+        11: angle_1.AngleStyle.Degree
     };
     return HorizontalCoordinates;
 }());

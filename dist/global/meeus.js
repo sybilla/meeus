@@ -1,6 +1,6 @@
 /**
   @license
-  This is the repository for meeus, a library for astrometric computations in JavaScript by Sybilla Technologies, sp. z o.o.
+  This is a repository for meeus, a library for astrometric computations in JavaScript by Sybilla Technologies, sp. z o.o.
 
 The library is available under different licenses depending on whether it is intended for commercial/government use, or for a personal or non-profit project.
 
@@ -57,13 +57,22 @@ System.register("sybilla/angle", [], true, function(require, exports, module) {
       return outTuple;
     };
     AngleParser.matchToAngle = function(match) {
-      var first = parseFloat(match.match[2]);
+      var tmp = match.match[2];
+      if (tmp)
+        tmp = tmp.replace(',', '.');
+      var first = parseFloat(tmp);
       if (isNaN(first))
         first = 0;
-      var second = parseFloat(match.match[4]);
+      var tmp = match.match[4];
+      if (tmp)
+        tmp = tmp.replace(',', '.');
+      var second = parseFloat(tmp);
       if (isNaN(second))
         second = 0;
-      var third = parseFloat(match.match[6]);
+      var tmp = match.match[6];
+      if (tmp)
+        tmp = tmp.replace(',', '.');
+      var third = parseFloat(tmp);
       if (isNaN(third))
         third = 0;
       var angle;
@@ -84,7 +93,7 @@ System.register("sybilla/angle", [], true, function(require, exports, module) {
         angle = angle.negative();
       return angle;
     };
-    AngleParser.RegexPatterns = ['d ([+-])?(\\d{1,3}):( )?(\\d{1,2}):?( )?(\\d{1,2}([\\.,]\\d+)?)?', '([+-])?(\\d{1,3}):( )?(\\d{1,2}):?( )?(\\d{1,2}([\\.,]\\d+)?)?', 'd ([+-])?(\\d{1,3})( )(\\d{1,2})( )?(\\d{1,2}([\\.,]\\d+)?)?', '([+-])?(\\d{1,3})( )(\\d{1,2})( )?(\\d{1,2}([\\.,]\\d+)?)?', '([+-])?(\\d{1,3})h( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)?[s]?', '([+-])?(\\d{1,3})d( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)?[s]?', '([+-])?(\\d{1,3})[°*]( )?(\\d{1,2})\\\'( )?(\\d{1,2}([\.,]\\d+)?)?[\\"]?', '([a-zA-Z])(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)', '([+-])?(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)?', 'd ([+-])?(\\d{1,3}([\\.,]\\d+)?)', '([+-])?(\\d{1,3}([\\.,]\\d+)?)'];
+    AngleParser.RegexPatterns = ["d ([+-])?(\\d{1,3}):( )?(\\d{1,2}):( )?(\\d{1,2}([\\.,]\\d+)?)", "([+-])?(\\d{1,3}):( )?(\\d{1,2}):( )?(\\d{1,2}([\\.,]\\d+)?)", "d ([+-])?(\\d{1,3})() (\\d{1,2})() (\\d{1,2}([\\.,]\\d+)?)", "([+-])?(\\d{1,3})() (\\d{1,2})() (\\d{1,2}([\\.,]\\d+)?)", "([+-])?(\\d{1,3})h( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)[s]?", "([+-])?(\\d{1,3})d( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)[s]?", "([+-])?(\\d{1,3})[°*]( )?(\\d{1,2})'( )?(\\d{1,2}([\\.,]\\d+)?)[\"]?", "([a-zA-Z])(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)", "([+-])?(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)", "([+-])?(\\d{2})()(\\d{2}[\\.,]\\d+)", "[d][ ]([+-])?(\\d{1,3}([\\.\\,]\\d+)?)", "([+-])?(\\d{1,3}([\\.,]\\d+)?)"];
     AngleParser.RegexPatternStyleMap = {
       0: AngleStyle.Degree,
       1: AngleStyle.Degree,
@@ -96,7 +105,8 @@ System.register("sybilla/angle", [], true, function(require, exports, module) {
       7: AngleStyle.Hour,
       8: AngleStyle.Degree,
       9: AngleStyle.Degree,
-      10: AngleStyle.Radian
+      10: AngleStyle.Degree,
+      11: AngleStyle.Radian
     };
     return AngleParser;
   }());
@@ -769,7 +779,7 @@ System.register("sybilla/coordinateSystems/geographicCoordinates", ["sybilla/ang
     };
     GeographicCoordinates.RegexPatternStyleMap = {
       7: angle_1.AngleStyle.Degree,
-      10: angle_1.AngleStyle.Degree
+      11: angle_1.AngleStyle.Degree
     };
     return GeographicCoordinates;
   }());
@@ -841,11 +851,11 @@ System.register("sybilla/coordinateSystems/equatorialCoordinates", ["sybilla/ang
       1: angle_1.AngleStyle.Hour,
       3: angle_1.AngleStyle.Hour,
       8: angle_1.AngleStyle.Hour,
-      10: angle_1.AngleStyle.Hour
+      11: angle_1.AngleStyle.Hour
     };
     EquatorialCoordinates.DecPatternStyleMap = {
       7: angle_1.AngleStyle.Degree,
-      10: angle_1.AngleStyle.Degree
+      11: angle_1.AngleStyle.Degree
     };
     return EquatorialCoordinates;
   }());
@@ -915,7 +925,7 @@ System.register("sybilla/coordinateSystems/horizontalCoordinates", ["sybilla/ang
     };
     HorizontalCoordinates.RegexPatternStyleMap = {
       7: angle_1.AngleStyle.Degree,
-      10: angle_1.AngleStyle.Degree
+      11: angle_1.AngleStyle.Degree
     };
     return HorizontalCoordinates;
   }());
@@ -980,18 +990,18 @@ System.register("sybilla/solarSystem/sun", ["sybilla/datetime/utcdate", "sybilla
   return module.exports;
 });
 
-System.register("sybilla/coordinateSystems/eclipticalCoordinates", ["sybilla/angle"], true, function(require, exports, module) {
+System.register("sybilla/coordinateSystems/eclipticCoordinates", ["sybilla/angle"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
   "use strict";
   var angle_1 = require("sybilla/angle");
-  var EclipticalCoordinates = (function() {
-    function EclipticalCoordinates(latitude, longitude) {
+  var EclipticCoordinates = (function() {
+    function EclipticCoordinates(latitude, longitude) {
       this.latitude = latitude;
       this.longitude = longitude;
     }
-    Object.defineProperty(EclipticalCoordinates.prototype, "latitude", {
+    Object.defineProperty(EclipticCoordinates.prototype, "latitude", {
       get: function() {
         return this._lat;
       },
@@ -1001,7 +1011,7 @@ System.register("sybilla/coordinateSystems/eclipticalCoordinates", ["sybilla/ang
       enumerable: true,
       configurable: true
     });
-    Object.defineProperty(EclipticalCoordinates.prototype, "longitude", {
+    Object.defineProperty(EclipticCoordinates.prototype, "longitude", {
       get: function() {
         return this._lon;
       },
@@ -1011,7 +1021,7 @@ System.register("sybilla/coordinateSystems/eclipticalCoordinates", ["sybilla/ang
       enumerable: true,
       configurable: true
     });
-    EclipticalCoordinates.prototype.toFormattedString = function(config) {
+    EclipticCoordinates.prototype.toFormattedString = function(config) {
       config = config || {};
       if (config.digits == null)
         config.digits = 1;
@@ -1023,26 +1033,26 @@ System.register("sybilla/coordinateSystems/eclipticalCoordinates", ["sybilla/ang
         digits: config.digits
       });
     };
-    EclipticalCoordinates.parse = function(s, latStyle, lonStyle) {
-      var tuple = angle_1.AngleParser.match(s, EclipticalCoordinates.RegexPatternStyleMap, latStyle);
+    EclipticCoordinates.parse = function(s, latStyle, lonStyle) {
+      var tuple = angle_1.AngleParser.match(s, EclipticCoordinates.RegexPatternStyleMap, latStyle);
       if (!tuple.match)
         throw 's';
       var lat = angle_1.AngleParser.matchToAngle(tuple);
       s = s.substr(s.indexOf(tuple.match[0]) + tuple.match[0].length);
-      tuple = angle_1.AngleParser.match(s, EclipticalCoordinates.RegexPatternStyleMap, lonStyle);
+      tuple = angle_1.AngleParser.match(s, EclipticCoordinates.RegexPatternStyleMap, lonStyle);
       if (!tuple.match)
         throw 's';
       var lon = angle_1.AngleParser.matchToAngle(tuple);
       s = s.substr(s.indexOf(tuple.match[0]) + tuple.match[0].length).trim();
-      return new EclipticalCoordinates(lat, lon);
+      return new EclipticCoordinates(lat, lon);
     };
-    EclipticalCoordinates.RegexPatternStyleMap = {
+    EclipticCoordinates.RegexPatternStyleMap = {
       7: angle_1.AngleStyle.Degree,
-      10: angle_1.AngleStyle.Degree
+      11: angle_1.AngleStyle.Degree
     };
-    return EclipticalCoordinates;
+    return EclipticCoordinates;
   }());
-  exports.EclipticalCoordinates = EclipticalCoordinates;
+  exports.EclipticCoordinates = EclipticCoordinates;
   global.define = __define;
   return module.exports;
 });
@@ -2466,7 +2476,7 @@ System.register("sybilla/solarSystem/moon", ["sybilla/datetime/utcdate", "sybill
   return module.exports;
 });
 
-System.register("sybilla/meeus", ["sybilla/angle", "sybilla/solarSystem/moon", "sybilla/solarSystem/earth", "sybilla/solarSystem/sun", "sybilla/datetime/hjddate", "sybilla/datetime/siderealtimes", "sybilla/datetime/taidate", "sybilla/datetime/ttdate", "sybilla/datetime/utcdate", "sybilla/coordinateSystems/eclipticalCoordinates", "sybilla/coordinateSystems/equatorialCoordinates", "sybilla/coordinateSystems/geographicCoordinates", "sybilla/coordinateSystems/horizontalCoordinates", "sybilla/core/meeusEngine"], true, function(require, exports, module) {
+System.register("sybilla/meeus", ["sybilla/angle", "sybilla/solarSystem/moon", "sybilla/solarSystem/earth", "sybilla/solarSystem/sun", "sybilla/datetime/hjddate", "sybilla/datetime/siderealtimes", "sybilla/datetime/taidate", "sybilla/datetime/ttdate", "sybilla/datetime/utcdate", "sybilla/coordinateSystems/eclipticCoordinates", "sybilla/coordinateSystems/equatorialCoordinates", "sybilla/coordinateSystems/geographicCoordinates", "sybilla/coordinateSystems/horizontalCoordinates", "sybilla/core/meeusEngine"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
@@ -2485,7 +2495,7 @@ System.register("sybilla/meeus", ["sybilla/angle", "sybilla/solarSystem/moon", "
   __export(require("sybilla/datetime/taidate"));
   __export(require("sybilla/datetime/ttdate"));
   __export(require("sybilla/datetime/utcdate"));
-  __export(require("sybilla/coordinateSystems/eclipticalCoordinates"));
+  __export(require("sybilla/coordinateSystems/eclipticCoordinates"));
   __export(require("sybilla/coordinateSystems/equatorialCoordinates"));
   __export(require("sybilla/coordinateSystems/geographicCoordinates"));
   __export(require("sybilla/coordinateSystems/horizontalCoordinates"));

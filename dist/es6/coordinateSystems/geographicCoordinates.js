@@ -52,6 +52,6 @@ export class GeographicCoordinates {
 }
 GeographicCoordinates.RegexPatternStyleMap = {
     7: AngleStyle.Degree,
-    10: AngleStyle.Degree
+    11: AngleStyle.Degree
 };
 //# sourceMappingURL=geographicCoordinates.js.map

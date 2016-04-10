@@ -1,5 +1,5 @@
 import { AngleStyle, AngleNormalization, AngleParser } from '../angle';
-export class EclipticalCoordinates {
+export class EclipticCoordinates {
     constructor(latitude, longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
@@ -23,21 +23,21 @@ export class EclipticalCoordinates {
         return this.latitude.toFormattedString({ format: 'D', digits: config.digits }) + ' ' + this.longitude.toFormattedString({ format: 'D', digits: config.digits });
     }
     static parse(s, latStyle, lonStyle) {
-        var tuple = AngleParser.match(s, EclipticalCoordinates.RegexPatternStyleMap, latStyle);
+        var tuple = AngleParser.match(s, EclipticCoordinates.RegexPatternStyleMap, latStyle);
         if (!tuple.match)
             throw 's';
         var lat = AngleParser.matchToAngle(tuple);
         s = s.substr(s.indexOf(tuple.match[0]) + tuple.match[0].length);
-        tuple = AngleParser.match(s, EclipticalCoordinates.RegexPatternStyleMap, lonStyle);
+        tuple = AngleParser.match(s, EclipticCoordinates.RegexPatternStyleMap, lonStyle);
         if (!tuple.match)
             throw 's';
         var lon = AngleParser.matchToAngle(tuple);
         s = s.substr(s.indexOf(tuple.match[0]) + tuple.match[0].length).trim();
-        return new EclipticalCoordinates(lat, lon);
+        return new EclipticCoordinates(lat, lon);
     }
 }
-EclipticalCoordinates.RegexPatternStyleMap = {
+EclipticCoordinates.RegexPatternStyleMap = {
     7: AngleStyle.Degree,
-    10: AngleStyle.Degree
+    11: AngleStyle.Degree
 };
-//# sourceMappingURL=eclipticalCoordinates.js.map
+//# sourceMappingURL=eclipticCoordinates.js.map

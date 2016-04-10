@@ -48,7 +48,7 @@ define(["require", "exports", '../angle', '../core/meeusEngine'], function (requ
         };
         HorizontalCoordinates.RegexPatternStyleMap = {
             7: angle_1.AngleStyle.Degree,
-            10: angle_1.AngleStyle.Degree
+            11: angle_1.AngleStyle.Degree
         };
         return HorizontalCoordinates;
     }());

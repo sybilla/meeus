@@ -42,13 +42,22 @@ define(["require", "exports"], function (require, exports) {
             return outTuple;
         };
         AngleParser.matchToAngle = function (match) {
-            var first = parseFloat(match.match[2]);
+            var tmp = match.match[2];
+            if (tmp)
+                tmp = tmp.replace(',', '.');
+            var first = parseFloat(tmp);
             if (isNaN(first))
                 first = 0;
-            var second = parseFloat(match.match[4]);
+            var tmp = match.match[4];
+            if (tmp)
+                tmp = tmp.replace(',', '.');
+            var second = parseFloat(tmp);
             if (isNaN(second))
                 second = 0;
-            var third = parseFloat(match.match[6]);
+            var tmp = match.match[6];
+            if (tmp)
+                tmp = tmp.replace(',', '.');
+            var third = parseFloat(tmp);
             if (isNaN(third))
                 third = 0;
             var angle;
@@ -70,17 +79,18 @@ define(["require", "exports"], function (require, exports) {
             return angle;
         };
         AngleParser.RegexPatterns = [
-            'd ([+-])?(\\d{1,3}):( )?(\\d{1,2}):?( )?(\\d{1,2}([\\.,]\\d+)?)?',
-            '([+-])?(\\d{1,3}):( )?(\\d{1,2}):?( )?(\\d{1,2}([\\.,]\\d+)?)?',
-            'd ([+-])?(\\d{1,3})( )(\\d{1,2})( )?(\\d{1,2}([\\.,]\\d+)?)?',
-            '([+-])?(\\d{1,3})( )(\\d{1,2})( )?(\\d{1,2}([\\.,]\\d+)?)?',
-            '([+-])?(\\d{1,3})h( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)?[s]?',
-            '([+-])?(\\d{1,3})d( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)?[s]?',
-            '([+-])?(\\d{1,3})[°*]( )?(\\d{1,2})\\\'( )?(\\d{1,2}([\.,]\\d+)?)?[\\"]?',
-            '([a-zA-Z])(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)',
-            '([+-])?(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)?',
-            'd ([+-])?(\\d{1,3}([\\.,]\\d+)?)',
-            '([+-])?(\\d{1,3}([\\.,]\\d+)?)',
+            /*  0 */ "d ([+-])?(\\d{1,3}):( )?(\\d{1,2}):( )?(\\d{1,2}([\\.,]\\d+)?)",
+            /*  1 */ "([+-])?(\\d{1,3}):( )?(\\d{1,2}):( )?(\\d{1,2}([\\.,]\\d+)?)",
+            /*  2 */ "d ([+-])?(\\d{1,3})() (\\d{1,2})() (\\d{1,2}([\\.,]\\d+)?)",
+            /*  3 */ "([+-])?(\\d{1,3})() (\\d{1,2})() (\\d{1,2}([\\.,]\\d+)?)",
+            /*  4 */ "([+-])?(\\d{1,3})h( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)[s]?",
+            /*  5 */ "([+-])?(\\d{1,3})d( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)[s]?",
+            /*  6 */ "([+-])?(\\d{1,3})[°*]( )?(\\d{1,2})'( )?(\\d{1,2}([\\.,]\\d+)?)[\"]?",
+            /*  7 */ "([a-zA-Z])(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)",
+            /*  8 */ "([+-])?(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)",
+            /*  9 */ "([+-])?(\\d{2})()(\\d{2}[\\.,]\\d+)",
+            /* 10 */ "[d][ ]([+-])?(\\d{1,3}([\\.\\,]\\d+)?)",
+            /* 11 */ "([+-])?(\\d{1,3}([\\.,]\\d+)?)"
         ];
         AngleParser.RegexPatternStyleMap = {
             0: AngleStyle.Degree,
@@ -93,7 +103,8 @@ define(["require", "exports"], function (require, exports) {
             7: AngleStyle.Hour,
             8: AngleStyle.Degree,
             9: AngleStyle.Degree,
-            10: AngleStyle.Radian,
+            10: AngleStyle.Degree,
+            11: AngleStyle.Radian,
         };
         return AngleParser;
     }());

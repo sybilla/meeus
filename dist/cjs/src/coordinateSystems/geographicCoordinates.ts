@@ -10,7 +10,7 @@ export class GeographicCoordinates {
 
     private static RegexPatternStyleMap : any = {
         7: AngleStyle.Degree,
-        10: AngleStyle.Degree
+        11: AngleStyle.Degree
     };
 
     constructor(latitude: Angle, longitude: Angle, altitude: number) {

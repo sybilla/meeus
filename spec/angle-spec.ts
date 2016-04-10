@@ -20,7 +20,7 @@ describe('Parsing', () => {
     ];
     
   it("Parse default hour pattern", () => {
-      for (let i = 0; i < samples.length; i++) {
+        for (let i = 0, l = samples.length; i < l; i++) {
         expect(expected).to.eql(meeus.Angle.parse(samples[i]), "Failed at: " + i);
     }
   });
@@ -68,7 +68,7 @@ describe("Parsing", () => {
 
     // Act & Assert
     it("Parse_Default_Degree_Patterns", () => {
-        for (let i = 0; i < samples.length; i++) {
+        for (let i = 0, l = samples.length; i < l; i++) {
             expect(expected).to.eql(meeus.Angle.parse(samples[i]), "Failed at: " + i);
         }
     });
@@ -83,7 +83,7 @@ describe("Parsing", () => {
     ];
 
     it("Parse_Default_Radian_Patterns", () => {
-        for (let i = 0; i < samples.length; i++) {
+        for (let i = 0, l = samples.length; i < l; i++) {
             expect(expected).to.eql(meeus.Angle.parse(samples[i]), "Failed at: " + i);
         }
     });
@@ -99,7 +99,7 @@ describe("Parsing", () => {
     ];
 
     it("Parse_Default_Radian_With_Decimals_Patterns", () => {
-        for (let i = 0; i < samples.length; i++) {
+        for (let i = 0, l = samples.length; i < l; i++) {      
             expect(expected).to.eql(meeus.Angle.parse(samples[i]), "Failed at: " + i);
         }
     });
@@ -149,7 +149,7 @@ describe("Parsing", () => {
 
     // Act & Assert
     it("Parse_Default_Degree_With_Decimals_Patterns", () => {
-        for (let i = 0; i < samples.length; i++) {
+        for (let i = 0, l = samples.length; i < l; i++) {
             expect(expected).to.eql(meeus.Angle.parse(samples[i]), "Failed at: " + i);
         }
     });
@@ -176,7 +176,7 @@ describe("Parsing", () => {
     ];
 
     it("Parse_Default_Hour_With_Decimals_Patterns", () => {
-        for (let i = 0; i < samples.length; i++) {
+        for (let i = 0, l = samples.length; i < l; i++) {
             expect(expected).to.eql(meeus.Angle.parse(samples[i]), "Failed at: " + i);
         }
     });

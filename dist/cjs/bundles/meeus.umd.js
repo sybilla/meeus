@@ -1,6 +1,6 @@
 /**
   @license
-  This is the repository for meeus, a library for astrometric computations in JavaScript by Sybilla Technologies, sp. z o.o.
+  This is a repository for meeus, a library for astrometric computations in JavaScript by Sybilla Technologies, sp. z o.o.
 
 The library is available under different licenses depending on whether it is intended for commercial/government use, or for a personal or non-profit project.
 
@@ -51,13 +51,22 @@ var AngleParser = (function () {
         return outTuple;
     };
     AngleParser.matchToAngle = function (match) {
-        var first = parseFloat(match.match[2]);
+        var tmp = match.match[2];
+        if (tmp)
+            tmp = tmp.replace(',', '.');
+        var first = parseFloat(tmp);
         if (isNaN(first))
             first = 0;
-        var second = parseFloat(match.match[4]);
+        var tmp = match.match[4];
+        if (tmp)
+            tmp = tmp.replace(',', '.');
+        var second = parseFloat(tmp);
         if (isNaN(second))
             second = 0;
-        var third = parseFloat(match.match[6]);
+        var tmp = match.match[6];
+        if (tmp)
+            tmp = tmp.replace(',', '.');
+        var third = parseFloat(tmp);
         if (isNaN(third))
             third = 0;
         var angle;
@@ -79,17 +88,18 @@ var AngleParser = (function () {
         return angle;
     };
     AngleParser.RegexPatterns = [
-        'd ([+-])?(\\d{1,3}):( )?(\\d{1,2}):?( )?(\\d{1,2}([\\.,]\\d+)?)?',
-        '([+-])?(\\d{1,3}):( )?(\\d{1,2}):?( )?(\\d{1,2}([\\.,]\\d+)?)?',
-        'd ([+-])?(\\d{1,3})( )(\\d{1,2})( )?(\\d{1,2}([\\.,]\\d+)?)?',
-        '([+-])?(\\d{1,3})( )(\\d{1,2})( )?(\\d{1,2}([\\.,]\\d+)?)?',
-        '([+-])?(\\d{1,3})h( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)?[s]?',
-        '([+-])?(\\d{1,3})d( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)?[s]?',
-        '([+-])?(\\d{1,3})[°*]( )?(\\d{1,2})\\\'( )?(\\d{1,2}([\.,]\\d+)?)?[\\"]?',
-        '([a-zA-Z])(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)',
-        '([+-])?(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)?',
-        'd ([+-])?(\\d{1,3}([\\.,]\\d+)?)',
-        '([+-])?(\\d{1,3}([\\.,]\\d+)?)',
+        /*  0 */ "d ([+-])?(\\d{1,3}):( )?(\\d{1,2}):( )?(\\d{1,2}([\\.,]\\d+)?)",
+        /*  1 */ "([+-])?(\\d{1,3}):( )?(\\d{1,2}):( )?(\\d{1,2}([\\.,]\\d+)?)",
+        /*  2 */ "d ([+-])?(\\d{1,3})() (\\d{1,2})() (\\d{1,2}([\\.,]\\d+)?)",
+        /*  3 */ "([+-])?(\\d{1,3})() (\\d{1,2})() (\\d{1,2}([\\.,]\\d+)?)",
+        /*  4 */ "([+-])?(\\d{1,3})h( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)[s]?",
+        /*  5 */ "([+-])?(\\d{1,3})d( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)[s]?",
+        /*  6 */ "([+-])?(\\d{1,3})[°*]( )?(\\d{1,2})'( )?(\\d{1,2}([\\.,]\\d+)?)[\"]?",
+        /*  7 */ "([a-zA-Z])(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)",
+        /*  8 */ "([+-])?(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)",
+        /*  9 */ "([+-])?(\\d{2})()(\\d{2}[\\.,]\\d+)",
+        /* 10 */ "[d][ ]([+-])?(\\d{1,3}([\\.\\,]\\d+)?)",
+        /* 11 */ "([+-])?(\\d{1,3}([\\.,]\\d+)?)"
     ];
     AngleParser.RegexPatternStyleMap = {
         0: AngleStyle.Degree,
@@ -102,7 +112,8 @@ var AngleParser = (function () {
         7: AngleStyle.Hour,
         8: AngleStyle.Degree,
         9: AngleStyle.Degree,
-        10: AngleStyle.Radian,
+        10: AngleStyle.Degree,
+        11: AngleStyle.Radian,
     };
     return AngleParser;
 }());
@@ -410,12 +421,12 @@ exports.Angle = Angle;
 },{}],2:[function(require,module,exports){
 "use strict";
 var angle_1 = require('../angle');
-var EclipticalCoordinates = (function () {
-    function EclipticalCoordinates(latitude, longitude) {
+var EclipticCoordinates = (function () {
+    function EclipticCoordinates(latitude, longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
-    Object.defineProperty(EclipticalCoordinates.prototype, "latitude", {
+    Object.defineProperty(EclipticCoordinates.prototype, "latitude", {
         get: function () {
             return this._lat;
         },
@@ -425,7 +436,7 @@ var EclipticalCoordinates = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(EclipticalCoordinates.prototype, "longitude", {
+    Object.defineProperty(EclipticCoordinates.prototype, "longitude", {
         get: function () {
             return this._lon;
         },
@@ -435,32 +446,32 @@ var EclipticalCoordinates = (function () {
         enumerable: true,
         configurable: true
     });
-    EclipticalCoordinates.prototype.toFormattedString = function (config) {
+    EclipticCoordinates.prototype.toFormattedString = function (config) {
         config = config || {};
         if (config.digits == null)
             config.digits = 1;
         return this.latitude.toFormattedString({ format: 'D', digits: config.digits }) + ' ' + this.longitude.toFormattedString({ format: 'D', digits: config.digits });
     };
-    EclipticalCoordinates.parse = function (s, latStyle, lonStyle) {
-        var tuple = angle_1.AngleParser.match(s, EclipticalCoordinates.RegexPatternStyleMap, latStyle);
+    EclipticCoordinates.parse = function (s, latStyle, lonStyle) {
+        var tuple = angle_1.AngleParser.match(s, EclipticCoordinates.RegexPatternStyleMap, latStyle);
         if (!tuple.match)
             throw 's';
         var lat = angle_1.AngleParser.matchToAngle(tuple);
         s = s.substr(s.indexOf(tuple.match[0]) + tuple.match[0].length);
-        tuple = angle_1.AngleParser.match(s, EclipticalCoordinates.RegexPatternStyleMap, lonStyle);
+        tuple = angle_1.AngleParser.match(s, EclipticCoordinates.RegexPatternStyleMap, lonStyle);
         if (!tuple.match)
             throw 's';
         var lon = angle_1.AngleParser.matchToAngle(tuple);
         s = s.substr(s.indexOf(tuple.match[0]) + tuple.match[0].length).trim();
-        return new EclipticalCoordinates(lat, lon);
+        return new EclipticCoordinates(lat, lon);
     };
-    EclipticalCoordinates.RegexPatternStyleMap = {
+    EclipticCoordinates.RegexPatternStyleMap = {
         7: angle_1.AngleStyle.Degree,
-        10: angle_1.AngleStyle.Degree
+        11: angle_1.AngleStyle.Degree
     };
-    return EclipticalCoordinates;
+    return EclipticCoordinates;
 }());
-exports.EclipticalCoordinates = EclipticalCoordinates;
+exports.EclipticCoordinates = EclipticCoordinates;
 
 },{"../angle":1}],3:[function(require,module,exports){
 "use strict";
@@ -516,11 +527,11 @@ var EquatorialCoordinates = (function () {
         1: angle_1.AngleStyle.Hour,
         3: angle_1.AngleStyle.Hour,
         8: angle_1.AngleStyle.Hour,
-        10: angle_1.AngleStyle.Hour
+        11: angle_1.AngleStyle.Hour
     };
     EquatorialCoordinates.DecPatternStyleMap = {
         7: angle_1.AngleStyle.Degree,
-        10: angle_1.AngleStyle.Degree
+        11: angle_1.AngleStyle.Degree
     };
     return EquatorialCoordinates;
 }());
@@ -593,7 +604,7 @@ var GeographicCoordinates = (function () {
     };
     GeographicCoordinates.RegexPatternStyleMap = {
         7: angle_1.AngleStyle.Degree,
-        10: angle_1.AngleStyle.Degree
+        11: angle_1.AngleStyle.Degree
     };
     return GeographicCoordinates;
 }());
@@ -651,7 +662,7 @@ var HorizontalCoordinates = (function () {
     };
     HorizontalCoordinates.RegexPatternStyleMap = {
         7: angle_1.AngleStyle.Degree,
-        10: angle_1.AngleStyle.Degree
+        11: angle_1.AngleStyle.Degree
     };
     return HorizontalCoordinates;
 }());
@@ -2301,13 +2312,13 @@ __export(require('./datetime/siderealtimes'));
 __export(require('./datetime/taidate'));
 __export(require('./datetime/ttdate'));
 __export(require('./datetime/utcdate'));
-__export(require('./coordinateSystems/eclipticalCoordinates'));
+__export(require('./coordinateSystems/eclipticCoordinates'));
 __export(require('./coordinateSystems/equatorialCoordinates'));
 __export(require('./coordinateSystems/geographicCoordinates'));
 __export(require('./coordinateSystems/horizontalCoordinates'));
 __export(require('./core/meeusEngine'));
 
-},{"./angle":1,"./coordinateSystems/eclipticalCoordinates":2,"./coordinateSystems/equatorialCoordinates":3,"./coordinateSystems/geographicCoordinates":4,"./coordinateSystems/horizontalCoordinates":5,"./core/meeusEngine":6,"./datetime/hjddate":7,"./datetime/siderealtimes":8,"./datetime/taidate":9,"./datetime/ttdate":10,"./datetime/utcdate":11,"./solarSystem/earth":13,"./solarSystem/moon":14,"./solarSystem/sun":15}],13:[function(require,module,exports){
+},{"./angle":1,"./coordinateSystems/eclipticCoordinates":2,"./coordinateSystems/equatorialCoordinates":3,"./coordinateSystems/geographicCoordinates":4,"./coordinateSystems/horizontalCoordinates":5,"./core/meeusEngine":6,"./datetime/hjddate":7,"./datetime/siderealtimes":8,"./datetime/taidate":9,"./datetime/ttdate":10,"./datetime/utcdate":11,"./solarSystem/earth":13,"./solarSystem/moon":14,"./solarSystem/sun":15}],13:[function(require,module,exports){
 "use strict";
 var meeusEngine_1 = require('../core/meeusEngine');
 var utcdate_1 = require('../datetime/utcdate');

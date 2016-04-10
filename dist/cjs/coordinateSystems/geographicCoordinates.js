@@ -64,7 +64,7 @@ var GeographicCoordinates = (function () {
     };
     GeographicCoordinates.RegexPatternStyleMap = {
         7: angle_1.AngleStyle.Degree,
-        10: angle_1.AngleStyle.Degree
+        11: angle_1.AngleStyle.Degree
     };
     return GeographicCoordinates;
 }());

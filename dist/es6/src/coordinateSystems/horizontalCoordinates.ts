@@ -9,8 +9,8 @@ export class HorizontalCoordinates {
     private _az: Angle;
     
     private static RegexPatternStyleMap : any = {
-            7: AngleStyle.Degree,
-        10: AngleStyle.Degree
+        7: AngleStyle.Degree,
+        11: AngleStyle.Degree
     };
 
     constructor(altitude: Angle, azimuth: Angle) {

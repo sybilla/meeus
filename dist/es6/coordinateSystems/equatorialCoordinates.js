@@ -43,10 +43,10 @@ EquatorialCoordinates.RaPatternStyleMap = {
     1: AngleStyle.Hour,
     3: AngleStyle.Hour,
     8: AngleStyle.Hour,
-    10: AngleStyle.Hour
+    11: AngleStyle.Hour
 };
 EquatorialCoordinates.DecPatternStyleMap = {
     7: AngleStyle.Degree,
-    10: AngleStyle.Degree
+    11: AngleStyle.Degree
 };
 //# sourceMappingURL=equatorialCoordinates.js.map

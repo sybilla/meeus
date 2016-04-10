@@ -1,4 +1,4 @@
-This is the repository for meeus, a library for astrometric computations in JavaScript by Sybilla Technologies, sp. z o.o.
+This is a repository for meeus, a library for astrometric computations in JavaScript by Sybilla Technologies, sp. z o.o.
 
 The library is available under different licenses depending on whether it is intended for commercial/government use, or for a personal or non-profit project.
 

@@ -1,5 +1,5 @@
 import { Angle, AngleStyle } from '../angle';
-export declare class EclipticalCoordinates {
+export declare class EclipticCoordinates {
     private _lat;
     private _lon;
     private static RegexPatternStyleMap;
@@ -7,5 +7,5 @@ export declare class EclipticalCoordinates {
     latitude: Angle;
     longitude: Angle;
     toFormattedString(config: any): string;
-    static parse(s: string, latStyle?: AngleStyle, lonStyle?: AngleStyle): EclipticalCoordinates;
+    static parse(s: string, latStyle?: AngleStyle, lonStyle?: AngleStyle): EclipticCoordinates;
 }

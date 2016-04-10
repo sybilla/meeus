@@ -1,11 +1,11 @@
 "use strict";
 var angle_1 = require('../angle');
-var EclipticalCoordinates = (function () {
-    function EclipticalCoordinates(latitude, longitude) {
+var EclipticCoordinates = (function () {
+    function EclipticCoordinates(latitude, longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
-    Object.defineProperty(EclipticalCoordinates.prototype, "latitude", {
+    Object.defineProperty(EclipticCoordinates.prototype, "latitude", {
         get: function () {
             return this._lat;
         },
@@ -15,7 +15,7 @@ var EclipticalCoordinates = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(EclipticalCoordinates.prototype, "longitude", {
+    Object.defineProperty(EclipticCoordinates.prototype, "longitude", {
         get: function () {
             return this._lon;
         },
@@ -25,30 +25,30 @@ var EclipticalCoordinates = (function () {
         enumerable: true,
         configurable: true
     });
-    EclipticalCoordinates.prototype.toFormattedString = function (config) {
+    EclipticCoordinates.prototype.toFormattedString = function (config) {
         config = config || {};
         if (config.digits == null)
             config.digits = 1;
         return this.latitude.toFormattedString({ format: 'D', digits: config.digits }) + ' ' + this.longitude.toFormattedString({ format: 'D', digits: config.digits });
     };
-    EclipticalCoordinates.parse = function (s, latStyle, lonStyle) {
-        var tuple = angle_1.AngleParser.match(s, EclipticalCoordinates.RegexPatternStyleMap, latStyle);
+    EclipticCoordinates.parse = function (s, latStyle, lonStyle) {
+        var tuple = angle_1.AngleParser.match(s, EclipticCoordinates.RegexPatternStyleMap, latStyle);
         if (!tuple.match)
             throw 's';
         var lat = angle_1.AngleParser.matchToAngle(tuple);
         s = s.substr(s.indexOf(tuple.match[0]) + tuple.match[0].length);
-        tuple = angle_1.AngleParser.match(s, EclipticalCoordinates.RegexPatternStyleMap, lonStyle);
+        tuple = angle_1.AngleParser.match(s, EclipticCoordinates.RegexPatternStyleMap, lonStyle);
         if (!tuple.match)
             throw 's';
         var lon = angle_1.AngleParser.matchToAngle(tuple);
         s = s.substr(s.indexOf(tuple.match[0]) + tuple.match[0].length).trim();
-        return new EclipticalCoordinates(lat, lon);
+        return new EclipticCoordinates(lat, lon);
     };
-    EclipticalCoordinates.RegexPatternStyleMap = {
+    EclipticCoordinates.RegexPatternStyleMap = {
         7: angle_1.AngleStyle.Degree,
-        10: angle_1.AngleStyle.Degree
+        11: angle_1.AngleStyle.Degree
     };
-    return EclipticalCoordinates;
+    return EclipticCoordinates;
 }());
-exports.EclipticalCoordinates = EclipticalCoordinates;
-//# sourceMappingURL=eclipticalCoordinates.js.map
+exports.EclipticCoordinates = EclipticCoordinates;
+//# sourceMappingURL=eclipticCoordinates.js.map

@@ -3,13 +3,13 @@ import {UtcDate} from '../datetime/utcdate';
 import {GeographicCoordinates} from './geographicCoordinates';
 import {HorizontalCoordinates} from './horizontalCoordinates';
 
-export class EclipticalCoordinates {
+export class EclipticCoordinates {
     private _lat: Angle;
     private _lon: Angle;
 
     private static RegexPatternStyleMap : any = {
         7: AngleStyle.Degree,
-        10: AngleStyle.Degree
+        11: AngleStyle.Degree
     };
 
     constructor(latitude: Angle, longitude: Angle) {
@@ -39,19 +39,19 @@ export class EclipticalCoordinates {
         return this.latitude.toFormattedString({ format: 'D', digits: config.digits }) + ' ' + this.longitude.toFormattedString({ format: 'D', digits: config.digits });	
     }
     
-    public static parse(s: string, latStyle?: AngleStyle, lonStyle?: AngleStyle) : EclipticalCoordinates {
-        var tuple = AngleParser.match(s, EclipticalCoordinates.RegexPatternStyleMap, latStyle);
+    public static parse(s: string, latStyle?: AngleStyle, lonStyle?: AngleStyle) : EclipticCoordinates {
+        var tuple = AngleParser.match(s, EclipticCoordinates.RegexPatternStyleMap, latStyle);
         if (!tuple.match) throw 's';
         var lat = AngleParser.matchToAngle(tuple);
 
         s = s.substr(s.indexOf(tuple.match[0]) + tuple.match[0].length);
 
-        tuple = AngleParser.match(s, EclipticalCoordinates.RegexPatternStyleMap, lonStyle);
+        tuple = AngleParser.match(s, EclipticCoordinates.RegexPatternStyleMap, lonStyle);
         if (!tuple.match) throw 's';
         var lon = AngleParser.matchToAngle(tuple);
 
         s = s.substr(s.indexOf(tuple.match[0]) + tuple.match[0].length).trim();
 
-        return new EclipticalCoordinates(lat, lon);
+        return new EclipticCoordinates(lat, lon);
     }
 }
