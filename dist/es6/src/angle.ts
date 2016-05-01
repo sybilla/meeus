@@ -5,18 +5,18 @@ export enum AngleNormalization { Reflective, Periodic };
 export class AngleParser {
 
     static RegexPatterns: Array<any> = [
-        /*  0 */"d ([+-])?(\\d{1,3}):( )?(\\d{1,2}):( )?(\\d{1,2}([\\.,]\\d+)?)",
-        /*  1 */"([+-])?(\\d{1,3}):( )?(\\d{1,2}):( )?(\\d{1,2}([\\.,]\\d+)?)",
-        /*  2 */"d ([+-])?(\\d{1,3})() (\\d{1,2})() (\\d{1,2}([\\.,]\\d+)?)",
-        /*  3 */"([+-])?(\\d{1,3})() (\\d{1,2})() (\\d{1,2}([\\.,]\\d+)?)",
-        /*  4 */"([+-])?(\\d{1,3})h( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)[s]?",
-        /*  5 */"([+-])?(\\d{1,3})d( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)[s]?",
-        /*  6 */"([+-])?(\\d{1,3})[°*]( )?(\\d{1,2})'( )?(\\d{1,2}([\\.,]\\d+)?)[\"]?",
-        /*  7 */"([a-zA-Z])(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)",
-        /*  8 */"([+-])?(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)",
-        /*  9 */"([+-])?(\\d{2})()(\\d{2}[\\.,]\\d+)",
-        /* 10 */"[d][ ]([+-])?(\\d{1,3}([\\.\\,]\\d+)?)",
-        /* 11 */"([+-])?(\\d{1,3}([\\.,]\\d+)?)"
+        /*  0 */"^d ([+-])?(\\d{1,3}):( )?(\\d{1,2}):( )?(\\d{1,2}([\\.,]\\d+)?)",
+        /*  1 */"^([+-])?(\\d{1,3}):( )?(\\d{1,2}):( )?(\\d{1,2}([\\.,]\\d+)?)",
+        /*  2 */"^d ([+-])?(\\d{1,3})() (\\d{1,2})() (\\d{1,2}([\\.,]\\d+)?)",
+        /*  3 */"^([+-])?(\\d{1,3})() (\\d{1,2})() (\\d{1,2}([\\.,]\\d+)?)",
+        /*  4 */"^([+-])?(\\d{1,3})h( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)[s]?",
+        /*  5 */"^([+-])?(\\d{1,3})d( )?(\\d{1,2})m( )?(\\d{1,2}([\\.,]\\d+)?)[s]?",
+        /*  6 */"^([+-])?(\\d{1,3})[°*]( )?(\\d{1,2})'( )?(\\d{1,2}([\\.,]\\d+)?)[\"]?",
+        /*  7 */"^([a-zA-Z])(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)",
+        /*  8 */"^([+-])?(\\d{2})()(\\d{2}[\\.,]\\d+)",
+        /*  9 */"^([+-])?(\\d{2})()(\\d{2})()(\\d{2}([\\.,]\\d+)?)",
+        /* 10 */"^[d][ ]([+-])?(\\d{1,3}([\\.\\,]\\d+)?)",
+        /* 11 */"^([+-])?(\\d{1,3}([\\.,]\\d+)?)"
         // 'd ([+-])?(\\d{1,3}):( )?(\\d{1,2}):?( )?(\\d{1,2}([\\.,]\\d+)?)?',
         // '([+-])?(\\d{1,3}):( )?(\\d{1,2}):?( )?(\\d{1,2}([\\.,]\\d+)?)?',
         // 'd ([+-])?(\\d{1,3})( )(\\d{1,2})( )?(\\d{1,2}([\\.,]\\d+)?)?',
@@ -45,13 +45,14 @@ export class AngleParser {
         11: AngleStyle.Radian,
     };
 
+    // TODO: make negative angle parsing exact
     static parse(s: string, patternStyleMap: any, style?: AngleStyle): Angle {
         return AngleParser.matchToAngle(AngleParser.match(s, patternStyleMap, style));
     }
 
     static match(s: string, patternStyleMap: any, style?: AngleStyle): any {
         if (s != null) {
-            s = s.trim();
+            s = s.trim().replace(/^[^(0-9|a-zA-Z|\-)]/, '');
         }
 
         var outTuple: any = null;
@@ -79,22 +80,22 @@ export class AngleParser {
     }
 
     static matchToAngle(match: any): Angle {
-            
+
         var tmp = match.match[2];
-        if (tmp) tmp = tmp.replace(',','.');
-        
-        var first: number = parseFloat(tmp);        
+        if (tmp) tmp = tmp.replace(',', '.');
+
+        var first: number = parseFloat(tmp);
         if (isNaN(first)) first = 0;
 
         var tmp = match.match[4];
-        if (tmp) tmp = tmp.replace(',','.');
-        
+        if (tmp) tmp = tmp.replace(',', '.');
+
         var second: number = parseFloat(tmp);
         if (isNaN(second)) second = 0;
 
         var tmp = match.match[6];
-        if (tmp) tmp = tmp.replace(',','.');
-        
+        if (tmp) tmp = tmp.replace(',', '.');
+
         var third: number = parseFloat(tmp);
         if (isNaN(third)) third = 0;
 
@@ -114,12 +115,12 @@ export class AngleParser {
                 throw 'style';
         }
 
-        if (match.match[1] === '-')
-            angle = angle.negative();
+        if (match.match[1] === '-') {
+          angle = angle.negative();
+        }
 
         return angle;
     }
-
 }
 
 export class Angle {
@@ -357,7 +358,7 @@ export class Angle {
         degreeSeconds = degreeSeconds || 0;
         degreeMilliseconds = degreeMilliseconds || 0;
         degrees = degrees + degreeMinutes / 60 + degreeSeconds / 3600 + degreeMilliseconds / 3600000;
-
+        
         if (Math.abs(degrees) >= 360) {
             var intDegrees = Math.floor(degrees);
             var restDegrees = degrees - intDegrees;

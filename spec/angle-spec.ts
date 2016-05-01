@@ -18,12 +18,12 @@ describe('Parsing', () => {
         "+18h4m20",
         "J180420"
     ];
-    
-  it("Parse default hour pattern", () => {
+
+    it("Parse Default Hour Pattern", () => {
         for (let i = 0, l = samples.length; i < l; i++) {
-        expect(expected).to.eql(meeus.Angle.parse(samples[i]), "Failed at: " + i);
-    }
-  });
+            expect(expected).to.eql(meeus.Angle.parse(samples[i]), "Failed at: " + i);
+        }
+    });
 });
 
 
@@ -67,7 +67,7 @@ describe("Parsing", () => {
     ];
 
     // Act & Assert
-    it("Parse_Default_Degree_Patterns", () => {
+    it("Parse Default Degree Patterns", () => {
         for (let i = 0, l = samples.length; i < l; i++) {
             expect(expected).to.eql(meeus.Angle.parse(samples[i]), "Failed at: " + i);
         }
@@ -82,7 +82,7 @@ describe("Parsing", () => {
         "+18"
     ];
 
-    it("Parse_Default_Radian_Patterns", () => {
+    it("Parse Default Radian Patterns", () => {
         for (let i = 0, l = samples.length; i < l; i++) {
             expect(expected).to.eql(meeus.Angle.parse(samples[i]), "Failed at: " + i);
         }
@@ -98,8 +98,8 @@ describe("Parsing", () => {
         "+18,12"
     ];
 
-    it("Parse_Default_Radian_With_Decimals_Patterns", () => {
-        for (let i = 0, l = samples.length; i < l; i++) {      
+    it("Parse Default Radian-With-Decimals Patterns", () => {
+        for (let i = 0, l = samples.length; i < l; i++) {
             expect(expected).to.eql(meeus.Angle.parse(samples[i]), "Failed at: " + i);
         }
     });

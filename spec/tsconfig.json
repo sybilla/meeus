@@ -15,6 +15,7 @@
     },
     "files": [
         "angle-spec.ts",
+        "equatorialCoordinates-spec.ts",
         "../typings/browser.d.ts"
     ]
 }
