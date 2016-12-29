@@ -56,7 +56,7 @@ export class __BaseTime {
             minutes -= 60;
         }
 
-        return hour + ':' + __BaseTime.absPad(minutes) + ':' + __BaseTime.absPad(seconds);
+        return __BaseTime.absPad(hour) + ':' + __BaseTime.absPad(minutes) + ':' + __BaseTime.absPad(seconds);
     }
 
     private static absPad(val: number, fixed?: number) {
