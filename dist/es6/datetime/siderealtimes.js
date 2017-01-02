@@ -42,7 +42,7 @@ export class __BaseTime {
             hour += 1;
             minutes -= 60;
         }
-        return hour + ':' + __BaseTime.absPad(minutes) + ':' + __BaseTime.absPad(seconds);
+        return __BaseTime.absPad(hour) + ':' + __BaseTime.absPad(minutes) + ':' + __BaseTime.absPad(seconds);
     }
     static absPad(val, fixed) {
         var fixedValue = Math.abs(val).toFixed(fixed || 0);

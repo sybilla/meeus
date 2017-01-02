@@ -600,7 +600,7 @@ System.register("sybilla/datetime/siderealtimes", ["sybilla/datetime/utcdate"], 
         hour += 1;
         minutes -= 60;
       }
-      return hour + ':' + __BaseTime.absPad(minutes) + ':' + __BaseTime.absPad(seconds);
+      return __BaseTime.absPad(hour) + ':' + __BaseTime.absPad(minutes) + ':' + __BaseTime.absPad(seconds);
     };
     __BaseTime.absPad = function(val, fixed) {
       var fixedValue = Math.abs(val).toFixed(fixed || 0);
