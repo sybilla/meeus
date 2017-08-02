@@ -11,5 +11,5 @@ JavaScript library implementing some basic astrometrical types and transforms hi
 You can use sources from  dist. But if you want to change something and build from TypeScript sources here's the way:
 
 1. Clone this repository.
-2. `npm install` in the directory
+2. `npm install` or `yarn install` in the directory
 3. `gulp` to build the project

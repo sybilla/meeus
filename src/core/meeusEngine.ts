@@ -344,6 +344,9 @@ export class MeeusEngine {
             utc = UtcDate.fromDate(<Date>date)
         else if (date instanceof UtcDate)
             utc = (<UtcDate>date);
+        else {
+            throw new Error("date has unknown date type");
+        }
         
         var ecAtUtc = MeeusEngine.fromJ2000(ec, utc);//.toEpoch(ec, utc);
         
@@ -379,6 +382,9 @@ export class MeeusEngine {
             utc = UtcDate.fromDate(<Date>date)
         else if (date instanceof UtcDate)
             utc = (<UtcDate>date);
+        else {
+            throw new Error("date has unknown date type");
+        }
             
         var a = position.azimuth.degrees + 180;
         if (a >= 360) a -= 360;
@@ -624,7 +630,9 @@ export class MeeusEngine {
     
     private static calc_Sun_ApparentLong(jt : number, sunTrueLong? : number, sunLongOfAscNode? : number) : number {
         var stl = sunTrueLong || MeeusEngine.calc_Sun_TrueLong(jt);
-        var sunLongOfAscNode = sunLongOfAscNode || MeeusEngine.calc_Sun_LongitudeOfAscendingNode(jt);
+        if (sunLongOfAscNode === undefined) {
+            sunLongOfAscNode = MeeusEngine.calc_Sun_LongitudeOfAscendingNode(jt);
+        }
         return stl - 0.00569 - 0.00478 * Math.sin(MeeusEngine.D2R * sunLongOfAscNode); // degrees
     }
     
@@ -924,7 +932,7 @@ export class MeeusEngine {
     private static toUnitVector(ec: EquatorialCoordinates) : Array<any> {
         var dec0 = ec.declination.radians;
         var ra0 = ec.rightAscension.radians;
-        var res = [];
+        var res: number[] = [];
         res.push(Math.cos(dec0) * Math.cos(ra0));
         res.push(Math.cos(dec0) * Math.sin(ra0));
         res.push(Math.sin(dec0));

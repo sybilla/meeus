@@ -5,7 +5,7 @@ export class TaiDate {
     /**
      *
      */
-    constructor(days?: number) {
+    constructor(days: number) {
         this._days = days;
     }	
     

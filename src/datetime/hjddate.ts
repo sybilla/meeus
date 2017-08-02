@@ -5,7 +5,7 @@ export class HjdDate {
     /**
      *
      */
-    constructor(days?: number) {
+    constructor(days: number) {
         this._days = days;
     }	
     

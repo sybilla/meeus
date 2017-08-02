@@ -13,7 +13,7 @@ export class UtcDate {
     /**
      *
      */
-    constructor(days?: number) {
+    constructor(days: number) {
         if (days === undefined) this._days = UtcDate.getJulianDays(new Date());
         else this._days = days;
     }	
