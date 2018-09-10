@@ -1,8 +1,9 @@
 import {expect} from 'chai';
 import * as meeus from '../dist/cjs/meeus';
+import "mocha";
 
 describe('Parsing', () => {
-    var expected = new meeus.EquatorialCoordinates(meeus.Angle.fromHours(18, 4, 20.99), meeus.Angle.fromDegrees(29, 31, 08.9).negative());
+    var expected = new meeus.EquatorialCoordinates(meeus.Angle.fromHours(18, 4, 20.99), meeus.Angle.fromDegrees(29, 31, 8.9).negative());
     var samples = [
         "18:04:20.99 -29:31:08.9",
         "18 04 20.99 -29 31 08.9",
@@ -27,7 +28,7 @@ describe('Parsing', () => {
 
 
 describe("Parsing", () => {
-    var expected = new meeus.EquatorialCoordinates(meeus.Angle.fromHours(18, 4, 20.99), meeus.Angle.fromDegrees(29, 31, 08.9).negative());
+    var expected = new meeus.EquatorialCoordinates(meeus.Angle.fromHours(18, 4, 20.99), meeus.Angle.fromDegrees(29, 31, 8.9).negative());
     var samples = [
         "d 271:05:14.85 -29:31:08.9",
         "d 271 05 14.85 -29 31 08.9",
