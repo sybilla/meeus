@@ -1,6 +1,6 @@
 {
   "name": "meeus-es",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Implementation of astrometry types and routines highly influenced by 'Astronomical Algorithms' by Jean Meeus",
   "repository": {
     "type": "git",
@@ -28,6 +28,8 @@
   },
   "homepage": "https://github.com/sybilla/meeus#readme",
   "devDependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.5",
     "browserify": "^13.0.0",
     "chai": "^3.5.0",
     "google-closure-compiler": "^20160208.5.0",

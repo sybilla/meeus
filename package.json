@@ -52,6 +52,8 @@
   },
   "homepage": "https://github.com/sybilla/meeus#readme",
   "devDependencies": {
+    "@types/chai": "^4.1.4",
+    "@types/mocha": "^5.2.5",
     "browserify": "^13.0.0",
     "chai": "^3.5.0",
     "google-closure-compiler": "^20160208.5.0",

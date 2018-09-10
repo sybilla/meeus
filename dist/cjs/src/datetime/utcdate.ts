@@ -137,7 +137,7 @@ export class UtcDate {
         return new UtcDate(centuries * 36525.0 + 2451545.0);
     }
     
-    private static isJulianCalendar(year: number, month: number, day: number) : boolean {
+    public static isJulianCalendar(year: number, month: number, day: number) : boolean {
         if (year < 1582) return true;
         // All dates after 1582 are in the Gregorian calendar
         else if (year > 1582)
@@ -162,7 +162,7 @@ export class UtcDate {
         }			
     }
     
-    private static getJulianDays(date: Date) : number {
+    public static getJulianDays(date: Date) : number {
         var Y = date.getUTCFullYear();
         var M = date.getUTCMonth();
         var D = date.getUTCDate();

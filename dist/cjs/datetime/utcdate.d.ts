@@ -31,7 +31,7 @@ export declare class UtcDate {
     toHjdDate(location: GeographicCoordinates, position: EquatorialCoordinates): HjdDate;
     static fromDate(date: Date): UtcDate;
     static fromJ2000Centuries(centuries: number): UtcDate;
-    private static isJulianCalendar(year, month, day);
-    private static getJulianDays(date);
+    static isJulianCalendar(year: number, month: number, day: number): boolean;
+    static getJulianDays(date: Date): number;
     static toUtcDays(year: number, month: number, day: number, hour?: number, minute?: number, second?: number, millisecond?: number): number;
 }
