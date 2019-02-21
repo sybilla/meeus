@@ -1,6 +1,6 @@
 {
   "name": "meeus",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Implementation of astrometry types and routines highly influenced by 'Astronomical Algorithms' by Jean Meeus",
   "scripts": {
     "lint_src": "tslint -c tslint.json src/*.ts src/**/*.ts src/**/**/*.ts",
