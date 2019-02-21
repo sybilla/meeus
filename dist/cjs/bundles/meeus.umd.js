@@ -7,6 +7,15 @@ The library is available under different licenses depending on whether it is int
 - Commercial/governmnent: please contact us via info@sybillatechnologies.com
 - Personal or non-profit: MIT (https://opensource.org/licenses/MIT)
  **/
+/**
+  @license
+  This is a repository for meeus, a library for astrometric computations in JavaScript by Sybilla Technologies, sp. z o.o.
+
+The library is available under different licenses depending on whether it is intended for commercial/government use, or for a personal or non-profit project.
+
+- Commercial/governmnent: please contact us via info@sybillatechnologies.com
+- Personal or non-profit: MIT (https://opensource.org/licenses/MIT)
+ **/
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.meeus = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 (function (AngleStyle) {
@@ -2406,4 +2415,5 @@ exports.Sun = Sun;
 
 },{"../core/meeusEngine":6,"../datetime/utcdate":11}]},{},[12])(12)
 });
+
 

@@ -7,6 +7,15 @@ The library is available under different licenses depending on whether it is int
 - Commercial/governmnent: please contact us via info@sybillatechnologies.com
 - Personal or non-profit: MIT (https://opensource.org/licenses/MIT)
  **/
+/**
+  @license
+  This is a repository for meeus, a library for astrometric computations in JavaScript by Sybilla Technologies, sp. z o.o.
+
+The library is available under different licenses depending on whether it is intended for commercial/government use, or for a personal or non-profit project.
+
+- Commercial/governmnent: please contact us via info@sybillatechnologies.com
+- Personal or non-profit: MIT (https://opensource.org/licenses/MIT)
+ **/
 "format register";
 System.register("sybilla/angle", [], true, function(require, exports, module) {
   var global = System.global,
@@ -2505,4 +2514,5 @@ System.register("sybilla/meeus", ["sybilla/angle", "sybilla/solarSystem/moon", "
   global.define = __define;
   return module.exports;
 });
+
 
