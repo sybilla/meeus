@@ -1,5 +1,5 @@
 import { AngleStyle, AngleNormalization, AngleParser } from '../angle';
-import { MeeusEngine } from '../core/meeusEngine';
+import { MeeusEngine } from '../engine/meeusEngine';
 export class GeographicCoordinates {
     constructor(latitude, longitude, altitude) {
         this.latitude = latitude;

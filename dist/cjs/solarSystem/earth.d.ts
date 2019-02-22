@@ -1,4 +1,4 @@
-import { Vector } from '../core/meeusEngine';
+import { Vector } from '../engine/meeusEngine';
 import { UtcDate } from '../datetime/utcdate';
 export declare class Earth {
     static orbitalEccentricity(date: UtcDate | Date): Vector;

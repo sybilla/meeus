@@ -15,4 +15,4 @@ export * from './coordinateSystems/equatorialCoordinates';
 export * from './coordinateSystems/geographicCoordinates';
 export * from './coordinateSystems/horizontalCoordinates';
 
-export * from './core/meeusEngine';
+export * from './engine/meeusEngine';

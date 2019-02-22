@@ -1,4 +1,4 @@
-define(["require", "exports", '../core/meeusEngine'], function (require, exports, meeusEngine_1) {
+define(["require", "exports", '../engine/meeusEngine'], function (require, exports, meeusEngine_1) {
     "use strict";
     var UtcDate = (function () {
         /**

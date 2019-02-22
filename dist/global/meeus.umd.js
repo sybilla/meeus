@@ -7,15 +7,6 @@ The library is available under different licenses depending on whether it is int
 - Commercial/governmnent: please contact us via info@sybillatechnologies.com
 - Personal or non-profit: MIT (https://opensource.org/licenses/MIT)
  **/
-/**
-  @license
-  This is a repository for meeus, a library for astrometric computations in JavaScript by Sybilla Technologies, sp. z o.o.
-
-The library is available under different licenses depending on whether it is intended for commercial/government use, or for a personal or non-profit project.
-
-- Commercial/governmnent: please contact us via info@sybillatechnologies.com
-- Personal or non-profit: MIT (https://opensource.org/licenses/MIT)
- **/
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.meeus = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 (function (AngleStyle) {
@@ -487,7 +478,7 @@ exports.EclipticCoordinates = EclipticCoordinates;
 },{"../angle":1}],3:[function(require,module,exports){
 "use strict";
 var angle_1 = require('../angle');
-var meeusEngine_1 = require('../core/meeusEngine');
+var meeusEngine_1 = require('../engine/meeusEngine');
 var EquatorialCoordinates = (function () {
     function EquatorialCoordinates(rightAscension, declination) {
         this.rightAscension = rightAscension;
@@ -549,10 +540,10 @@ var EquatorialCoordinates = (function () {
 }());
 exports.EquatorialCoordinates = EquatorialCoordinates;
 
-},{"../angle":1,"../core/meeusEngine":6}],4:[function(require,module,exports){
+},{"../angle":1,"../engine/meeusEngine":11}],4:[function(require,module,exports){
 "use strict";
 var angle_1 = require('../angle');
-var meeusEngine_1 = require('../core/meeusEngine');
+var meeusEngine_1 = require('../engine/meeusEngine');
 var GeographicCoordinates = (function () {
     function GeographicCoordinates(latitude, longitude, altitude) {
         this.latitude = latitude;
@@ -622,10 +613,10 @@ var GeographicCoordinates = (function () {
 }());
 exports.GeographicCoordinates = GeographicCoordinates;
 
-},{"../angle":1,"../core/meeusEngine":6}],5:[function(require,module,exports){
+},{"../angle":1,"../engine/meeusEngine":11}],5:[function(require,module,exports){
 "use strict";
 var angle_1 = require('../angle');
-var meeusEngine_1 = require('../core/meeusEngine');
+var meeusEngine_1 = require('../engine/meeusEngine');
 var HorizontalCoordinates = (function () {
     function HorizontalCoordinates(altitude, azimuth) {
         this.altitude = altitude;
@@ -680,7 +671,455 @@ var HorizontalCoordinates = (function () {
 }());
 exports.HorizontalCoordinates = HorizontalCoordinates;
 
-},{"../angle":1,"../core/meeusEngine":6}],6:[function(require,module,exports){
+},{"../angle":1,"../engine/meeusEngine":11}],6:[function(require,module,exports){
+"use strict";
+var HjdDate = (function () {
+    /**
+     *
+     */
+    function HjdDate(days) {
+        this._days = days;
+    }
+    Object.defineProperty(HjdDate.prototype, "days", {
+        get: function () {
+            return this._days;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(HjdDate.prototype, "daysSinceJ2000", {
+        get: function () {
+            return this._days - 2451545.0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(HjdDate.prototype, "centuriesSinceJ2000", {
+        get: function () {
+            return this.daysSinceJ2000 / 36525.0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    HjdDate.prototype.addDays = function (days) {
+        return new HjdDate(this.days + days);
+    };
+    HjdDate.prototype.addHours = function (hours) {
+        return new HjdDate(this.days + hours / 24);
+    };
+    HjdDate.prototype.addMinutes = function (minutes) {
+        return new HjdDate(this.days + minutes / 1440);
+    };
+    HjdDate.prototype.addSeconds = function (seconds) {
+        return new HjdDate(this.days + seconds / 86400);
+    };
+    HjdDate.prototype.addMilliseconds = function (milliseconds) {
+        return new HjdDate(this.days + milliseconds / 86400000);
+    };
+    return HjdDate;
+}());
+exports.HjdDate = HjdDate;
+
+},{}],7:[function(require,module,exports){
+"use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var utcdate_1 = require('./utcdate');
+var __BaseTime = (function () {
+    /**
+     *
+     */
+    function __BaseTime(hours) {
+        this._hours = hours;
+    }
+    Object.defineProperty(__BaseTime.prototype, "hours", {
+        get: function () {
+            return this._hours;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(__BaseTime.prototype, "hour", {
+        get: function () {
+            return (0 | this._hours);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(__BaseTime.prototype, "minutes", {
+        get: function () {
+            return (this.hours - this.hour) * 60;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(__BaseTime.prototype, "minute", {
+        get: function () {
+            return (0 | this.minutes);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(__BaseTime.prototype, "seconds", {
+        get: function () {
+            return (this.minutes - this.minute) * 60;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(__BaseTime.prototype, "second", {
+        get: function () {
+            return (0 | this.seconds);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(__BaseTime.prototype, "milliseconds", {
+        get: function () {
+            return (this.seconds - this.second) * 1000;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(__BaseTime.prototype, "millisecond", {
+        get: function () {
+            return (0 | this.milliseconds);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    __BaseTime.prototype.toFormattedString = function () {
+        var seconds = Math.round(this.seconds);
+        var minutes = Math.round(this.minute);
+        var hour = this.hour;
+        if (seconds == 60) {
+            minutes += 1;
+            seconds = 0;
+        }
+        if (minutes >= 60) {
+            hour += 1;
+            minutes -= 60;
+        }
+        return __BaseTime.absPad(hour) + ':' + __BaseTime.absPad(minutes) + ':' + __BaseTime.absPad(seconds);
+    };
+    __BaseTime.absPad = function (val, fixed) {
+        var fixedValue = Math.abs(val).toFixed(fixed || 0);
+        var fixedNumber = parseFloat(fixedValue);
+        return ((fixedNumber < 10 && fixedNumber > -10) ? '0' : '') + fixedValue;
+    };
+    return __BaseTime;
+}());
+exports.__BaseTime = __BaseTime;
+var GmsTime = (function (_super) {
+    __extends(GmsTime, _super);
+    function GmsTime() {
+        _super.apply(this, arguments);
+    }
+    GmsTime.fromDate = function (date) {
+        return utcdate_1.UtcDate.fromDate(date).toGmsTime();
+    };
+    return GmsTime;
+}(__BaseTime));
+exports.GmsTime = GmsTime;
+var LmsTime = (function (_super) {
+    __extends(LmsTime, _super);
+    function LmsTime() {
+        _super.apply(this, arguments);
+    }
+    return LmsTime;
+}(__BaseTime));
+exports.LmsTime = LmsTime;
+var GasTime = (function (_super) {
+    __extends(GasTime, _super);
+    function GasTime() {
+        _super.apply(this, arguments);
+    }
+    GasTime.fromDate = function (date) {
+        return utcdate_1.UtcDate.fromDate(date).toGasTime();
+    };
+    return GasTime;
+}(__BaseTime));
+exports.GasTime = GasTime;
+var LasTime = (function (_super) {
+    __extends(LasTime, _super);
+    function LasTime() {
+        _super.apply(this, arguments);
+    }
+    return LasTime;
+}(__BaseTime));
+exports.LasTime = LasTime;
+
+},{"./utcdate":10}],8:[function(require,module,exports){
+"use strict";
+var TaiDate = (function () {
+    /**
+     *
+     */
+    function TaiDate(days) {
+        this._days = days;
+    }
+    Object.defineProperty(TaiDate.prototype, "days", {
+        get: function () {
+            return this._days;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TaiDate.prototype, "daysSinceJ2000", {
+        get: function () {
+            return this._days - 2451545.0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TaiDate.prototype, "centuriesSinceJ2000", {
+        get: function () {
+            return this.daysSinceJ2000 / 36525.0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TaiDate.prototype.addDays = function (days) {
+        return new TaiDate(this.days + days);
+    };
+    TaiDate.prototype.addHours = function (hours) {
+        return new TaiDate(this.days + hours / 24);
+    };
+    TaiDate.prototype.addMinutes = function (minutes) {
+        return new TaiDate(this.days + minutes / 1440);
+    };
+    TaiDate.prototype.addSeconds = function (seconds) {
+        return new TaiDate(this.days + seconds / 86400);
+    };
+    TaiDate.prototype.addMilliseconds = function (milliseconds) {
+        return new TaiDate(this.days + milliseconds / 86400000);
+    };
+    return TaiDate;
+}());
+exports.TaiDate = TaiDate;
+
+},{}],9:[function(require,module,exports){
+"use strict";
+var TtDate = (function () {
+    /**
+     *
+     */
+    function TtDate(days) {
+        this._days = days;
+    }
+    Object.defineProperty(TtDate.prototype, "days", {
+        get: function () {
+            return this._days;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TtDate.prototype, "daysSinceJ2000", {
+        get: function () {
+            return this._days - 2451545.0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TtDate.prototype, "centuriesSinceJ2000", {
+        get: function () {
+            return this.daysSinceJ2000 / 36525.0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TtDate.prototype.addDays = function (days) {
+        return new TtDate(this.days + days);
+    };
+    TtDate.prototype.addHours = function (hours) {
+        return new TtDate(this.days + hours / 24);
+    };
+    TtDate.prototype.addMinutes = function (minutes) {
+        return new TtDate(this.days + minutes / 1440);
+    };
+    TtDate.prototype.addSeconds = function (seconds) {
+        return new TtDate(this.days + seconds / 86400);
+    };
+    TtDate.prototype.addMilliseconds = function (milliseconds) {
+        return new TtDate(this.days + milliseconds / 86400000);
+    };
+    return TtDate;
+}());
+exports.TtDate = TtDate;
+
+},{}],10:[function(require,module,exports){
+"use strict";
+var meeusEngine_1 = require('../engine/meeusEngine');
+var UtcDate = (function () {
+    /**
+     *
+     */
+    function UtcDate(days) {
+        if (days === undefined)
+            this._days = UtcDate.getJulianDays(new Date());
+        else
+            this._days = days;
+    }
+    Object.defineProperty(UtcDate.prototype, "days", {
+        get: function () {
+            return this._days;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(UtcDate.prototype, "daysSinceJ2000", {
+        get: function () {
+            return this._days - 2451545.0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(UtcDate.prototype, "centuriesSinceJ2000", {
+        get: function () {
+            return this.daysSinceJ2000 / 36525.0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(UtcDate, "J2000", {
+        get: function () {
+            // 2000-01-01T12:00:00.000+00:00
+            return new UtcDate(2451545);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(UtcDate, "B1950", {
+        get: function () {
+            // 1949-12-31T22:09:00.000+00:00
+            return new UtcDate(2433282.4229166666);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    UtcDate.prototype.addDays = function (days) {
+        return new UtcDate(this.days + days);
+    };
+    UtcDate.prototype.addHours = function (hours) {
+        return new UtcDate(this.days + hours / 24);
+    };
+    UtcDate.prototype.addMinutes = function (minutes) {
+        return new UtcDate(this.days + minutes / 1440);
+    };
+    UtcDate.prototype.addSeconds = function (seconds) {
+        return new UtcDate(this.days + seconds / 86400);
+    };
+    UtcDate.prototype.addMilliseconds = function (milliseconds) {
+        return new UtcDate(this.days + milliseconds / 86400000);
+    };
+    UtcDate.prototype.toDate = function () {
+        var ye;
+        var mo;
+        var utcDays = this.days;
+        var A, B, C, D, E, F, Z;
+        F = utcDays + 0.5;
+        Z = Math.floor(F);
+        F -= Z;
+        if (Z < 2299161) {
+            A = Z;
+        }
+        else {
+            A = Math.floor((Z - 1867216.25) / 36524.25);
+            A = Z + 1 + A - Math.floor(A / 4);
+        }
+        B = A + 1524;
+        C = Math.floor((B - 122.1) / 365.25);
+        D = Math.floor(365.25 * C);
+        E = Math.floor((B - D) / 30.6);
+        var dd = B - D - Math.floor(30.6001 * E) + F;
+        mo = (E > 13) ? (0 | (E - 13)) : (0 | (E - 1));
+        ye = (mo == 1) || (mo == 2) ? (0 | (C - 4715)) : (0 | (C - 4716));
+        var hrs = (dd - (0 | dd)) * 24;
+        var date = new Date(ye, mo - 1, (0 | dd));
+        return new Date(date.getTime() + (hrs * 60 - date.getTimezoneOffset()) * 60000);
+    };
+    UtcDate.prototype.toLmsTime = function (location) {
+        return meeusEngine_1.MeeusEngine.toLmsTime(this, location);
+    };
+    UtcDate.prototype.toGmsTime = function () {
+        return meeusEngine_1.MeeusEngine.toGmsTime(this);
+    };
+    UtcDate.prototype.toLasTime = function (location) {
+        return meeusEngine_1.MeeusEngine.toLasTime(this, location);
+    };
+    UtcDate.prototype.toGasTime = function () {
+        return meeusEngine_1.MeeusEngine.toGasTime(this);
+    };
+    UtcDate.prototype.toTaiDate = function () {
+        return meeusEngine_1.MeeusEngine.toTaiDate(this);
+    };
+    UtcDate.prototype.toTtDate = function () {
+        return meeusEngine_1.MeeusEngine.toTtDate(this);
+    };
+    UtcDate.prototype.toHjdDate = function (location, position) {
+        return meeusEngine_1.MeeusEngine.toHjdDate(this, location, position);
+    };
+    UtcDate.fromDate = function (date) {
+        return new UtcDate(UtcDate.getJulianDays(date));
+    };
+    UtcDate.fromJ2000Centuries = function (centuries) {
+        return new UtcDate(centuries * 36525.0 + 2451545.0);
+    };
+    UtcDate.isJulianCalendar = function (year, month, day) {
+        if (year < 1582)
+            return true;
+        else if (year > 1582)
+            return false;
+        else {
+            // If 1582, check before October 4 (Julian) or after October 15 (Gregorian)
+            if (month < 10)
+                return true;
+            else if (month > 10)
+                return false;
+            else {
+                if (day < 5)
+                    return true;
+                else if (day > 14)
+                    return false;
+                else
+                    // Any date in the range 10/5/1582 to 10/14/1582 is invalid 
+                    throw "This date is not valid as it does not exist in either the Julian or the Gregorian calendars.";
+            }
+        }
+    };
+    UtcDate.getJulianDays = function (date) {
+        var Y = date.getUTCFullYear();
+        var M = date.getUTCMonth();
+        var D = date.getUTCDate();
+        var h = date.getUTCHours();
+        var m = date.getUTCMinutes();
+        var s = date.getUTCSeconds();
+        var ms = date.getUTCMilliseconds();
+        return UtcDate.toUtcDays(Y, M, D, h, m, s, ms);
+    };
+    UtcDate.toUtcDays = function (year, month, day, hour, minute, second, millisecond) {
+        month += 1;
+        hour = hour || 0;
+        minute = minute || 0;
+        second = second || 0;
+        millisecond = millisecond || 0;
+        var isValid = UtcDate.isJulianCalendar(year, month, day);
+        var M = month > 2 ? month : month + 12;
+        var Y = month > 2 ? year : year - 1;
+        var A = Math.floor(Y / 100);
+        var D = Math.floor(30.6001 * (M + 1));
+        var B = isValid ? 0 : 2 - A + Math.floor(A / 4);
+        var C = Math.floor(365.25 * (Y + 4716));
+        return B + C + D - 1524.5 + day + hour / 24 + minute / 1440 + (second + millisecond / 1000) / 86400;
+    };
+    return UtcDate;
+}());
+exports.UtcDate = UtcDate;
+
+},{"../engine/meeusEngine":11}],11:[function(require,module,exports){
 "use strict";
 var angle_1 = require('../angle');
 var utcdate_1 = require('../datetime/utcdate');
@@ -1862,455 +2301,7 @@ var MeeusEngine = (function () {
 }());
 exports.MeeusEngine = MeeusEngine;
 
-},{"../angle":1,"../coordinateSystems/equatorialCoordinates":3,"../coordinateSystems/geographicCoordinates":4,"../coordinateSystems/horizontalCoordinates":5,"../datetime/hjddate":7,"../datetime/siderealtimes":8,"../datetime/taidate":9,"../datetime/ttdate":10,"../datetime/utcdate":11}],7:[function(require,module,exports){
-"use strict";
-var HjdDate = (function () {
-    /**
-     *
-     */
-    function HjdDate(days) {
-        this._days = days;
-    }
-    Object.defineProperty(HjdDate.prototype, "days", {
-        get: function () {
-            return this._days;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(HjdDate.prototype, "daysSinceJ2000", {
-        get: function () {
-            return this._days - 2451545.0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(HjdDate.prototype, "centuriesSinceJ2000", {
-        get: function () {
-            return this.daysSinceJ2000 / 36525.0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    HjdDate.prototype.addDays = function (days) {
-        return new HjdDate(this.days + days);
-    };
-    HjdDate.prototype.addHours = function (hours) {
-        return new HjdDate(this.days + hours / 24);
-    };
-    HjdDate.prototype.addMinutes = function (minutes) {
-        return new HjdDate(this.days + minutes / 1440);
-    };
-    HjdDate.prototype.addSeconds = function (seconds) {
-        return new HjdDate(this.days + seconds / 86400);
-    };
-    HjdDate.prototype.addMilliseconds = function (milliseconds) {
-        return new HjdDate(this.days + milliseconds / 86400000);
-    };
-    return HjdDate;
-}());
-exports.HjdDate = HjdDate;
-
-},{}],8:[function(require,module,exports){
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var utcdate_1 = require('./utcdate');
-var __BaseTime = (function () {
-    /**
-     *
-     */
-    function __BaseTime(hours) {
-        this._hours = hours;
-    }
-    Object.defineProperty(__BaseTime.prototype, "hours", {
-        get: function () {
-            return this._hours;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(__BaseTime.prototype, "hour", {
-        get: function () {
-            return (0 | this._hours);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(__BaseTime.prototype, "minutes", {
-        get: function () {
-            return (this.hours - this.hour) * 60;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(__BaseTime.prototype, "minute", {
-        get: function () {
-            return (0 | this.minutes);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(__BaseTime.prototype, "seconds", {
-        get: function () {
-            return (this.minutes - this.minute) * 60;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(__BaseTime.prototype, "second", {
-        get: function () {
-            return (0 | this.seconds);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(__BaseTime.prototype, "milliseconds", {
-        get: function () {
-            return (this.seconds - this.second) * 1000;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(__BaseTime.prototype, "millisecond", {
-        get: function () {
-            return (0 | this.milliseconds);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    __BaseTime.prototype.toFormattedString = function () {
-        var seconds = Math.round(this.seconds);
-        var minutes = Math.round(this.minute);
-        var hour = this.hour;
-        if (seconds == 60) {
-            minutes += 1;
-            seconds = 0;
-        }
-        if (minutes >= 60) {
-            hour += 1;
-            minutes -= 60;
-        }
-        return __BaseTime.absPad(hour) + ':' + __BaseTime.absPad(minutes) + ':' + __BaseTime.absPad(seconds);
-    };
-    __BaseTime.absPad = function (val, fixed) {
-        var fixedValue = Math.abs(val).toFixed(fixed || 0);
-        var fixedNumber = parseFloat(fixedValue);
-        return ((fixedNumber < 10 && fixedNumber > -10) ? '0' : '') + fixedValue;
-    };
-    return __BaseTime;
-}());
-exports.__BaseTime = __BaseTime;
-var GmsTime = (function (_super) {
-    __extends(GmsTime, _super);
-    function GmsTime() {
-        _super.apply(this, arguments);
-    }
-    GmsTime.fromDate = function (date) {
-        return utcdate_1.UtcDate.fromDate(date).toGmsTime();
-    };
-    return GmsTime;
-}(__BaseTime));
-exports.GmsTime = GmsTime;
-var LmsTime = (function (_super) {
-    __extends(LmsTime, _super);
-    function LmsTime() {
-        _super.apply(this, arguments);
-    }
-    return LmsTime;
-}(__BaseTime));
-exports.LmsTime = LmsTime;
-var GasTime = (function (_super) {
-    __extends(GasTime, _super);
-    function GasTime() {
-        _super.apply(this, arguments);
-    }
-    GasTime.fromDate = function (date) {
-        return utcdate_1.UtcDate.fromDate(date).toGasTime();
-    };
-    return GasTime;
-}(__BaseTime));
-exports.GasTime = GasTime;
-var LasTime = (function (_super) {
-    __extends(LasTime, _super);
-    function LasTime() {
-        _super.apply(this, arguments);
-    }
-    return LasTime;
-}(__BaseTime));
-exports.LasTime = LasTime;
-
-},{"./utcdate":11}],9:[function(require,module,exports){
-"use strict";
-var TaiDate = (function () {
-    /**
-     *
-     */
-    function TaiDate(days) {
-        this._days = days;
-    }
-    Object.defineProperty(TaiDate.prototype, "days", {
-        get: function () {
-            return this._days;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TaiDate.prototype, "daysSinceJ2000", {
-        get: function () {
-            return this._days - 2451545.0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TaiDate.prototype, "centuriesSinceJ2000", {
-        get: function () {
-            return this.daysSinceJ2000 / 36525.0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    TaiDate.prototype.addDays = function (days) {
-        return new TaiDate(this.days + days);
-    };
-    TaiDate.prototype.addHours = function (hours) {
-        return new TaiDate(this.days + hours / 24);
-    };
-    TaiDate.prototype.addMinutes = function (minutes) {
-        return new TaiDate(this.days + minutes / 1440);
-    };
-    TaiDate.prototype.addSeconds = function (seconds) {
-        return new TaiDate(this.days + seconds / 86400);
-    };
-    TaiDate.prototype.addMilliseconds = function (milliseconds) {
-        return new TaiDate(this.days + milliseconds / 86400000);
-    };
-    return TaiDate;
-}());
-exports.TaiDate = TaiDate;
-
-},{}],10:[function(require,module,exports){
-"use strict";
-var TtDate = (function () {
-    /**
-     *
-     */
-    function TtDate(days) {
-        this._days = days;
-    }
-    Object.defineProperty(TtDate.prototype, "days", {
-        get: function () {
-            return this._days;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TtDate.prototype, "daysSinceJ2000", {
-        get: function () {
-            return this._days - 2451545.0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(TtDate.prototype, "centuriesSinceJ2000", {
-        get: function () {
-            return this.daysSinceJ2000 / 36525.0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    TtDate.prototype.addDays = function (days) {
-        return new TtDate(this.days + days);
-    };
-    TtDate.prototype.addHours = function (hours) {
-        return new TtDate(this.days + hours / 24);
-    };
-    TtDate.prototype.addMinutes = function (minutes) {
-        return new TtDate(this.days + minutes / 1440);
-    };
-    TtDate.prototype.addSeconds = function (seconds) {
-        return new TtDate(this.days + seconds / 86400);
-    };
-    TtDate.prototype.addMilliseconds = function (milliseconds) {
-        return new TtDate(this.days + milliseconds / 86400000);
-    };
-    return TtDate;
-}());
-exports.TtDate = TtDate;
-
-},{}],11:[function(require,module,exports){
-"use strict";
-var meeusEngine_1 = require('../core/meeusEngine');
-var UtcDate = (function () {
-    /**
-     *
-     */
-    function UtcDate(days) {
-        if (days === undefined)
-            this._days = UtcDate.getJulianDays(new Date());
-        else
-            this._days = days;
-    }
-    Object.defineProperty(UtcDate.prototype, "days", {
-        get: function () {
-            return this._days;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(UtcDate.prototype, "daysSinceJ2000", {
-        get: function () {
-            return this._days - 2451545.0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(UtcDate.prototype, "centuriesSinceJ2000", {
-        get: function () {
-            return this.daysSinceJ2000 / 36525.0;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(UtcDate, "J2000", {
-        get: function () {
-            // 2000-01-01T12:00:00.000+00:00
-            return new UtcDate(2451545);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(UtcDate, "B1950", {
-        get: function () {
-            // 1949-12-31T22:09:00.000+00:00
-            return new UtcDate(2433282.4229166666);
-        },
-        enumerable: true,
-        configurable: true
-    });
-    UtcDate.prototype.addDays = function (days) {
-        return new UtcDate(this.days + days);
-    };
-    UtcDate.prototype.addHours = function (hours) {
-        return new UtcDate(this.days + hours / 24);
-    };
-    UtcDate.prototype.addMinutes = function (minutes) {
-        return new UtcDate(this.days + minutes / 1440);
-    };
-    UtcDate.prototype.addSeconds = function (seconds) {
-        return new UtcDate(this.days + seconds / 86400);
-    };
-    UtcDate.prototype.addMilliseconds = function (milliseconds) {
-        return new UtcDate(this.days + milliseconds / 86400000);
-    };
-    UtcDate.prototype.toDate = function () {
-        var ye;
-        var mo;
-        var utcDays = this.days;
-        var A, B, C, D, E, F, Z;
-        F = utcDays + 0.5;
-        Z = Math.floor(F);
-        F -= Z;
-        if (Z < 2299161) {
-            A = Z;
-        }
-        else {
-            A = Math.floor((Z - 1867216.25) / 36524.25);
-            A = Z + 1 + A - Math.floor(A / 4);
-        }
-        B = A + 1524;
-        C = Math.floor((B - 122.1) / 365.25);
-        D = Math.floor(365.25 * C);
-        E = Math.floor((B - D) / 30.6);
-        var dd = B - D - Math.floor(30.6001 * E) + F;
-        mo = (E > 13) ? (0 | (E - 13)) : (0 | (E - 1));
-        ye = (mo == 1) || (mo == 2) ? (0 | (C - 4715)) : (0 | (C - 4716));
-        var hrs = (dd - (0 | dd)) * 24;
-        var date = new Date(ye, mo - 1, (0 | dd));
-        return new Date(date.getTime() + (hrs * 60 - date.getTimezoneOffset()) * 60000);
-    };
-    UtcDate.prototype.toLmsTime = function (location) {
-        return meeusEngine_1.MeeusEngine.toLmsTime(this, location);
-    };
-    UtcDate.prototype.toGmsTime = function () {
-        return meeusEngine_1.MeeusEngine.toGmsTime(this);
-    };
-    UtcDate.prototype.toLasTime = function (location) {
-        return meeusEngine_1.MeeusEngine.toLasTime(this, location);
-    };
-    UtcDate.prototype.toGasTime = function () {
-        return meeusEngine_1.MeeusEngine.toGasTime(this);
-    };
-    UtcDate.prototype.toTaiDate = function () {
-        return meeusEngine_1.MeeusEngine.toTaiDate(this);
-    };
-    UtcDate.prototype.toTtDate = function () {
-        return meeusEngine_1.MeeusEngine.toTtDate(this);
-    };
-    UtcDate.prototype.toHjdDate = function (location, position) {
-        return meeusEngine_1.MeeusEngine.toHjdDate(this, location, position);
-    };
-    UtcDate.fromDate = function (date) {
-        return new UtcDate(UtcDate.getJulianDays(date));
-    };
-    UtcDate.fromJ2000Centuries = function (centuries) {
-        return new UtcDate(centuries * 36525.0 + 2451545.0);
-    };
-    UtcDate.isJulianCalendar = function (year, month, day) {
-        if (year < 1582)
-            return true;
-        else if (year > 1582)
-            return false;
-        else {
-            // If 1582, check before October 4 (Julian) or after October 15 (Gregorian)
-            if (month < 10)
-                return true;
-            else if (month > 10)
-                return false;
-            else {
-                if (day < 5)
-                    return true;
-                else if (day > 14)
-                    return false;
-                else
-                    // Any date in the range 10/5/1582 to 10/14/1582 is invalid 
-                    throw "This date is not valid as it does not exist in either the Julian or the Gregorian calendars.";
-            }
-        }
-    };
-    UtcDate.getJulianDays = function (date) {
-        var Y = date.getUTCFullYear();
-        var M = date.getUTCMonth();
-        var D = date.getUTCDate();
-        var h = date.getUTCHours();
-        var m = date.getUTCMinutes();
-        var s = date.getUTCSeconds();
-        var ms = date.getUTCMilliseconds();
-        return UtcDate.toUtcDays(Y, M, D, h, m, s, ms);
-    };
-    UtcDate.toUtcDays = function (year, month, day, hour, minute, second, millisecond) {
-        month += 1;
-        hour = hour || 0;
-        minute = minute || 0;
-        second = second || 0;
-        millisecond = millisecond || 0;
-        var isValid = UtcDate.isJulianCalendar(year, month, day);
-        var M = month > 2 ? month : month + 12;
-        var Y = month > 2 ? year : year - 1;
-        var A = Math.floor(Y / 100);
-        var D = Math.floor(30.6001 * (M + 1));
-        var B = isValid ? 0 : 2 - A + Math.floor(A / 4);
-        var C = Math.floor(365.25 * (Y + 4716));
-        return B + C + D - 1524.5 + day + hour / 24 + minute / 1440 + (second + millisecond / 1000) / 86400;
-    };
-    return UtcDate;
-}());
-exports.UtcDate = UtcDate;
-
-},{"../core/meeusEngine":6}],12:[function(require,module,exports){
+},{"../angle":1,"../coordinateSystems/equatorialCoordinates":3,"../coordinateSystems/geographicCoordinates":4,"../coordinateSystems/horizontalCoordinates":5,"../datetime/hjddate":6,"../datetime/siderealtimes":7,"../datetime/taidate":8,"../datetime/ttdate":9,"../datetime/utcdate":10}],12:[function(require,module,exports){
 "use strict";
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
@@ -2328,11 +2319,11 @@ __export(require('./coordinateSystems/eclipticCoordinates'));
 __export(require('./coordinateSystems/equatorialCoordinates'));
 __export(require('./coordinateSystems/geographicCoordinates'));
 __export(require('./coordinateSystems/horizontalCoordinates'));
-__export(require('./core/meeusEngine'));
+__export(require('./engine/meeusEngine'));
 
-},{"./angle":1,"./coordinateSystems/eclipticCoordinates":2,"./coordinateSystems/equatorialCoordinates":3,"./coordinateSystems/geographicCoordinates":4,"./coordinateSystems/horizontalCoordinates":5,"./core/meeusEngine":6,"./datetime/hjddate":7,"./datetime/siderealtimes":8,"./datetime/taidate":9,"./datetime/ttdate":10,"./datetime/utcdate":11,"./solarSystem/earth":13,"./solarSystem/moon":14,"./solarSystem/sun":15}],13:[function(require,module,exports){
+},{"./angle":1,"./coordinateSystems/eclipticCoordinates":2,"./coordinateSystems/equatorialCoordinates":3,"./coordinateSystems/geographicCoordinates":4,"./coordinateSystems/horizontalCoordinates":5,"./datetime/hjddate":6,"./datetime/siderealtimes":7,"./datetime/taidate":8,"./datetime/ttdate":9,"./datetime/utcdate":10,"./engine/meeusEngine":11,"./solarSystem/earth":13,"./solarSystem/moon":14,"./solarSystem/sun":15}],13:[function(require,module,exports){
 "use strict";
-var meeusEngine_1 = require('../core/meeusEngine');
+var meeusEngine_1 = require('../engine/meeusEngine');
 var utcdate_1 = require('../datetime/utcdate');
 var Earth = (function () {
     function Earth() {
@@ -2367,10 +2358,10 @@ var Earth = (function () {
 }());
 exports.Earth = Earth;
 
-},{"../core/meeusEngine":6,"../datetime/utcdate":11}],14:[function(require,module,exports){
+},{"../datetime/utcdate":10,"../engine/meeusEngine":11}],14:[function(require,module,exports){
 "use strict";
 var utcdate_1 = require('../datetime/utcdate');
-var meeusEngine_1 = require('../core/meeusEngine');
+var meeusEngine_1 = require('../engine/meeusEngine');
 var Moon = (function () {
     function Moon() {
     }
@@ -2396,10 +2387,10 @@ var Moon = (function () {
 }());
 exports.Moon = Moon;
 
-},{"../core/meeusEngine":6,"../datetime/utcdate":11}],15:[function(require,module,exports){
+},{"../datetime/utcdate":10,"../engine/meeusEngine":11}],15:[function(require,module,exports){
 "use strict";
 var utcdate_1 = require('../datetime/utcdate');
-var meeusEngine_1 = require('../core/meeusEngine');
+var meeusEngine_1 = require('../engine/meeusEngine');
 var Sun = (function () {
     function Sun() {
     }
@@ -2413,7 +2404,6 @@ var Sun = (function () {
 }());
 exports.Sun = Sun;
 
-},{"../core/meeusEngine":6,"../datetime/utcdate":11}]},{},[12])(12)
+},{"../datetime/utcdate":10,"../engine/meeusEngine":11}]},{},[12])(12)
 });
-
 

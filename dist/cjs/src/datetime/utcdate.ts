@@ -5,7 +5,7 @@ import {TtDate} from './ttdate';
 import {TaiDate} from './taidate';
 import {GeographicCoordinates} from '../coordinateSystems/geographicCoordinates';
 import {EquatorialCoordinates} from '../coordinateSystems/equatorialCoordinates';
-import {MeeusEngine} from '../core/meeusEngine';
+import {MeeusEngine} from '../engine/meeusEngine';
 
 export class UtcDate {
     private _days : number;

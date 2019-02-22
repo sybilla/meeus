@@ -1,4 +1,4 @@
-import {MeeusEngine, Vector} from '../core/meeusEngine';
+import {MeeusEngine, Vector} from '../engine/meeusEngine';
 import {UtcDate} from '../datetime/utcdate';
 import {EquatorialCoordinates} from '../coordinateSystems/equatorialCoordinates';
 

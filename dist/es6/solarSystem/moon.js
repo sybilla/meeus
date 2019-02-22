@@ -1,5 +1,5 @@
 import { UtcDate } from '../datetime/utcdate';
-import { MeeusEngine } from '../core/meeusEngine';
+import { MeeusEngine } from '../engine/meeusEngine';
 export class Moon {
     static positionAt(date) {
         var utc = date;

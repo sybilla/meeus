@@ -15,5 +15,5 @@ __export(require('./coordinateSystems/eclipticCoordinates'));
 __export(require('./coordinateSystems/equatorialCoordinates'));
 __export(require('./coordinateSystems/geographicCoordinates'));
 __export(require('./coordinateSystems/horizontalCoordinates'));
-__export(require('./core/meeusEngine'));
+__export(require('./engine/meeusEngine'));
 //# sourceMappingURL=meeus.js.map

@@ -2,7 +2,7 @@ import {Angle, AngleStyle, AngleNormalization, AngleParser} from '../angle';
 import {UtcDate} from '../datetime/utcdate';
 import {GeographicCoordinates} from './geographicCoordinates';
 import {HorizontalCoordinates} from './horizontalCoordinates';
-import {Twilight, MeeusEngine} from '../core/meeusEngine';
+import {Twilight, MeeusEngine} from '../engine/meeusEngine';
 
 export class EquatorialCoordinates {
     private _ra: Angle;

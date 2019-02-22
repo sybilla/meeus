@@ -1,4 +1,4 @@
-define(["require", "exports", '../core/meeusEngine', '../datetime/utcdate'], function (require, exports, meeusEngine_1, utcdate_1) {
+define(["require", "exports", '../engine/meeusEngine', '../datetime/utcdate'], function (require, exports, meeusEngine_1, utcdate_1) {
     "use strict";
     var Earth = (function () {
         function Earth() {

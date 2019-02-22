@@ -1,4 +1,4 @@
-define(["require", "exports", '../angle', '../core/meeusEngine'], function (require, exports, angle_1, meeusEngine_1) {
+define(["require", "exports", '../angle', '../engine/meeusEngine'], function (require, exports, angle_1, meeusEngine_1) {
     "use strict";
     var GeographicCoordinates = (function () {
         function GeographicCoordinates(latitude, longitude, altitude) {

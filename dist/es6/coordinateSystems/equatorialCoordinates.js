@@ -1,5 +1,5 @@
 import { AngleStyle, AngleNormalization, AngleParser } from '../angle';
-import { MeeusEngine } from '../core/meeusEngine';
+import { MeeusEngine } from '../engine/meeusEngine';
 export class EquatorialCoordinates {
     constructor(rightAscension, declination) {
         this.rightAscension = rightAscension;

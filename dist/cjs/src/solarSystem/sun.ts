@@ -1,6 +1,6 @@
 import {EquatorialCoordinates} from '../coordinateSystems/equatorialCoordinates';
 import {UtcDate} from '../datetime/utcdate';
-import {MeeusEngine, Vector} from '../core/meeusEngine';
+import {MeeusEngine, Vector} from '../engine/meeusEngine';
 
 export class Sun {
     public static positionAt(date: UtcDate | Date) : EquatorialCoordinates {

@@ -1,6 +1,6 @@
 "use strict";
 var utcdate_1 = require('../datetime/utcdate');
-var meeusEngine_1 = require('../core/meeusEngine');
+var meeusEngine_1 = require('../engine/meeusEngine');
 var Moon = (function () {
     function Moon() {
     }

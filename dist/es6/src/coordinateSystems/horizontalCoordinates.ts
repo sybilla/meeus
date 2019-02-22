@@ -2,7 +2,7 @@ import {Angle, AngleStyle, AngleNormalization, AngleParser} from '../angle';
 import {UtcDate} from '../datetime/utcdate';
 import {GeographicCoordinates} from './geographicCoordinates';
 import {EquatorialCoordinates} from './equatorialCoordinates';
-import {MeeusEngine} from '../core/meeusEngine';
+import {MeeusEngine} from '../engine/meeusEngine';
 
 export class HorizontalCoordinates {
     private _alt: Angle;

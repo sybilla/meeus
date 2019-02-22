@@ -1,5 +1,5 @@
 import { AngleStyle, AngleNormalization, AngleParser } from '../angle';
-import { MeeusEngine } from '../core/meeusEngine';
+import { MeeusEngine } from '../engine/meeusEngine';
 export class HorizontalCoordinates {
     constructor(altitude, azimuth) {
         this.altitude = altitude;

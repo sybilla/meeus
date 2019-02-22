@@ -1,6 +1,6 @@
 "use strict";
 var angle_1 = require('../angle');
-var meeusEngine_1 = require('../core/meeusEngine');
+var meeusEngine_1 = require('../engine/meeusEngine');
 var HorizontalCoordinates = (function () {
     function HorizontalCoordinates(altitude, azimuth) {
         this.altitude = altitude;

@@ -1,6 +1,6 @@
 import {Angle, AngleStyle, AngleNormalization, AngleParser} from '../angle';
 import {UtcDate} from '../datetime/utcdate';
-import {Twilight,MeeusEngine} from '../core/meeusEngine';
+import {Twilight,MeeusEngine} from '../engine/meeusEngine';
 
 
 export class GeographicCoordinates {

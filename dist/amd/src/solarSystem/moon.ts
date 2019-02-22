@@ -1,7 +1,7 @@
 import {EquatorialCoordinates} from '../coordinateSystems/equatorialCoordinates';
 import {UtcDate} from '../datetime/utcdate';
 import {Angle} from '../angle';
-import {MeeusEngine} from '../core/meeusEngine';
+import {MeeusEngine} from '../engine/meeusEngine';
 
 export class Moon {
     

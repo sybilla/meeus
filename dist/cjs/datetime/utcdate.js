@@ -1,5 +1,5 @@
 "use strict";
-var meeusEngine_1 = require('../core/meeusEngine');
+var meeusEngine_1 = require('../engine/meeusEngine');
 var UtcDate = (function () {
     /**
      *

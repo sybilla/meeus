@@ -7,15 +7,6 @@ The library is available under different licenses depending on whether it is int
 - Commercial/governmnent: please contact us via info@sybillatechnologies.com
 - Personal or non-profit: MIT (https://opensource.org/licenses/MIT)
  **/
-/**
-  @license
-  This is a repository for meeus, a library for astrometric computations in JavaScript by Sybilla Technologies, sp. z o.o.
-
-The library is available under different licenses depending on whether it is intended for commercial/government use, or for a personal or non-profit project.
-
-- Commercial/governmnent: please contact us via info@sybillatechnologies.com
-- Personal or non-profit: MIT (https://opensource.org/licenses/MIT)
- **/
 "format register";
 System.register("sybilla/angle", [], true, function(require, exports, module) {
   var global = System.global,
@@ -713,13 +704,13 @@ System.register("sybilla/datetime/taidate", [], true, function(require, exports,
   return module.exports;
 });
 
-System.register("sybilla/coordinateSystems/geographicCoordinates", ["sybilla/angle", "sybilla/core/meeusEngine"], true, function(require, exports, module) {
+System.register("sybilla/coordinateSystems/geographicCoordinates", ["sybilla/angle", "sybilla/engine/meeusEngine"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
   "use strict";
   var angle_1 = require("sybilla/angle");
-  var meeusEngine_1 = require("sybilla/core/meeusEngine");
+  var meeusEngine_1 = require("sybilla/engine/meeusEngine");
   var GeographicCoordinates = (function() {
     function GeographicCoordinates(latitude, longitude, altitude) {
       this.latitude = latitude;
@@ -798,13 +789,13 @@ System.register("sybilla/coordinateSystems/geographicCoordinates", ["sybilla/ang
   return module.exports;
 });
 
-System.register("sybilla/coordinateSystems/equatorialCoordinates", ["sybilla/angle", "sybilla/core/meeusEngine"], true, function(require, exports, module) {
+System.register("sybilla/coordinateSystems/equatorialCoordinates", ["sybilla/angle", "sybilla/engine/meeusEngine"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
   "use strict";
   var angle_1 = require("sybilla/angle");
-  var meeusEngine_1 = require("sybilla/core/meeusEngine");
+  var meeusEngine_1 = require("sybilla/engine/meeusEngine");
   var EquatorialCoordinates = (function() {
     function EquatorialCoordinates(rightAscension, declination) {
       this.rightAscension = rightAscension;
@@ -875,13 +866,13 @@ System.register("sybilla/coordinateSystems/equatorialCoordinates", ["sybilla/ang
   return module.exports;
 });
 
-System.register("sybilla/coordinateSystems/horizontalCoordinates", ["sybilla/angle", "sybilla/core/meeusEngine"], true, function(require, exports, module) {
+System.register("sybilla/coordinateSystems/horizontalCoordinates", ["sybilla/angle", "sybilla/engine/meeusEngine"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
   "use strict";
   var angle_1 = require("sybilla/angle");
-  var meeusEngine_1 = require("sybilla/core/meeusEngine");
+  var meeusEngine_1 = require("sybilla/engine/meeusEngine");
   var HorizontalCoordinates = (function() {
     function HorizontalCoordinates(altitude, azimuth) {
       this.altitude = altitude;
@@ -945,12 +936,12 @@ System.register("sybilla/coordinateSystems/horizontalCoordinates", ["sybilla/ang
   return module.exports;
 });
 
-System.register("sybilla/solarSystem/earth", ["sybilla/core/meeusEngine", "sybilla/datetime/utcdate"], true, function(require, exports, module) {
+System.register("sybilla/solarSystem/earth", ["sybilla/engine/meeusEngine", "sybilla/datetime/utcdate"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
   "use strict";
-  var meeusEngine_1 = require("sybilla/core/meeusEngine");
+  var meeusEngine_1 = require("sybilla/engine/meeusEngine");
   var utcdate_1 = require("sybilla/datetime/utcdate");
   var Earth = (function() {
     function Earth() {}
@@ -979,13 +970,13 @@ System.register("sybilla/solarSystem/earth", ["sybilla/core/meeusEngine", "sybil
   return module.exports;
 });
 
-System.register("sybilla/solarSystem/sun", ["sybilla/datetime/utcdate", "sybilla/core/meeusEngine"], true, function(require, exports, module) {
+System.register("sybilla/solarSystem/sun", ["sybilla/datetime/utcdate", "sybilla/engine/meeusEngine"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
   "use strict";
   var utcdate_1 = require("sybilla/datetime/utcdate");
-  var meeusEngine_1 = require("sybilla/core/meeusEngine");
+  var meeusEngine_1 = require("sybilla/engine/meeusEngine");
   var Sun = (function() {
     function Sun() {}
     Sun.positionAt = function(date) {
@@ -1068,7 +1059,7 @@ System.register("sybilla/coordinateSystems/eclipticCoordinates", ["sybilla/angle
   return module.exports;
 });
 
-System.register("sybilla/core/meeusEngine", ["sybilla/angle", "sybilla/datetime/utcdate", "sybilla/datetime/hjddate", "sybilla/datetime/ttdate", "sybilla/datetime/siderealtimes", "sybilla/datetime/taidate", "sybilla/coordinateSystems/geographicCoordinates", "sybilla/coordinateSystems/equatorialCoordinates", "sybilla/coordinateSystems/horizontalCoordinates"], true, function(require, exports, module) {
+System.register("sybilla/engine/meeusEngine", ["sybilla/angle", "sybilla/datetime/utcdate", "sybilla/datetime/hjddate", "sybilla/datetime/ttdate", "sybilla/datetime/siderealtimes", "sybilla/datetime/taidate", "sybilla/coordinateSystems/geographicCoordinates", "sybilla/coordinateSystems/equatorialCoordinates", "sybilla/coordinateSystems/horizontalCoordinates"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
@@ -2280,12 +2271,12 @@ System.register("sybilla/core/meeusEngine", ["sybilla/angle", "sybilla/datetime/
   return module.exports;
 });
 
-System.register("sybilla/datetime/utcdate", ["sybilla/core/meeusEngine"], true, function(require, exports, module) {
+System.register("sybilla/datetime/utcdate", ["sybilla/engine/meeusEngine"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
   "use strict";
-  var meeusEngine_1 = require("sybilla/core/meeusEngine");
+  var meeusEngine_1 = require("sybilla/engine/meeusEngine");
   var UtcDate = (function() {
     function UtcDate(days) {
       if (days === undefined)
@@ -2453,13 +2444,13 @@ System.register("sybilla/datetime/utcdate", ["sybilla/core/meeusEngine"], true, 
   return module.exports;
 });
 
-System.register("sybilla/solarSystem/moon", ["sybilla/datetime/utcdate", "sybilla/core/meeusEngine"], true, function(require, exports, module) {
+System.register("sybilla/solarSystem/moon", ["sybilla/datetime/utcdate", "sybilla/engine/meeusEngine"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
   "use strict";
   var utcdate_1 = require("sybilla/datetime/utcdate");
-  var meeusEngine_1 = require("sybilla/core/meeusEngine");
+  var meeusEngine_1 = require("sybilla/engine/meeusEngine");
   var Moon = (function() {
     function Moon() {}
     Moon.positionAt = function(date) {
@@ -2487,7 +2478,7 @@ System.register("sybilla/solarSystem/moon", ["sybilla/datetime/utcdate", "sybill
   return module.exports;
 });
 
-System.register("sybilla/meeus", ["sybilla/angle", "sybilla/solarSystem/moon", "sybilla/solarSystem/earth", "sybilla/solarSystem/sun", "sybilla/datetime/hjddate", "sybilla/datetime/siderealtimes", "sybilla/datetime/taidate", "sybilla/datetime/ttdate", "sybilla/datetime/utcdate", "sybilla/coordinateSystems/eclipticCoordinates", "sybilla/coordinateSystems/equatorialCoordinates", "sybilla/coordinateSystems/geographicCoordinates", "sybilla/coordinateSystems/horizontalCoordinates", "sybilla/core/meeusEngine"], true, function(require, exports, module) {
+System.register("sybilla/meeus", ["sybilla/angle", "sybilla/solarSystem/moon", "sybilla/solarSystem/earth", "sybilla/solarSystem/sun", "sybilla/datetime/hjddate", "sybilla/datetime/siderealtimes", "sybilla/datetime/taidate", "sybilla/datetime/ttdate", "sybilla/datetime/utcdate", "sybilla/coordinateSystems/eclipticCoordinates", "sybilla/coordinateSystems/equatorialCoordinates", "sybilla/coordinateSystems/geographicCoordinates", "sybilla/coordinateSystems/horizontalCoordinates", "sybilla/engine/meeusEngine"], true, function(require, exports, module) {
   var global = System.global,
       __define = global.define;
   global.define = undefined;
@@ -2510,9 +2501,8 @@ System.register("sybilla/meeus", ["sybilla/angle", "sybilla/solarSystem/moon", "
   __export(require("sybilla/coordinateSystems/equatorialCoordinates"));
   __export(require("sybilla/coordinateSystems/geographicCoordinates"));
   __export(require("sybilla/coordinateSystems/horizontalCoordinates"));
-  __export(require("sybilla/core/meeusEngine"));
+  __export(require("sybilla/engine/meeusEngine"));
   global.define = __define;
   return module.exports;
 });
-
 
